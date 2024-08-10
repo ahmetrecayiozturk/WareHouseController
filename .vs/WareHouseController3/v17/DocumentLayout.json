@@ -1,0 +1,103 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|c:\\users\\ahmet\\desktop\\myprojects\\warehousecontrol\\try\\warehousecontroller3\\warehousecontroller3\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|solutionrelative:warehousecontroller3\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\warehousecontroller3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|solutionrelative:warehousecontroller3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\warehousecontroller3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|solutionrelative:warehousecontroller3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\warehousecontroller3\\warehousecontrolcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|solutionrelative:warehousecontroller3\\warehousecontrolcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\warehousecontroller3\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{752D09EA-46E4-4283-A852-F1312C88C6BD}|WareHouseController3\\WareHouseController3.csproj|solutionrelative:warehousecontroller3\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Product.cs",
+              "RelativeDocumentMoniker": "WareHouseController3\\Product.cs",
+              "ToolTip": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Product.cs",
+              "RelativeToolTip": "WareHouseController3\\Product.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T22:42:34.63Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductDal.cs",
+              "DocumentMoniker": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\ProductDal.cs",
+              "RelativeDocumentMoniker": "WareHouseController3\\ProductDal.cs",
+              "ToolTip": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\ProductDal.cs",
+              "RelativeToolTip": "WareHouseController3\\ProductDal.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAgwDEAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T22:42:36.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WareHouseControlContext.cs",
+              "DocumentMoniker": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\WareHouseControlContext.cs",
+              "RelativeDocumentMoniker": "WareHouseController3\\WareHouseControlContext.cs",
+              "ToolTip": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\WareHouseControlContext.cs",
+              "RelativeToolTip": "WareHouseController3\\WareHouseControlContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T22:42:38.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs [Tasar\u0131m]",
+              "DocumentMoniker": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Form1.cs",
+              "RelativeDocumentMoniker": "WareHouseController3\\Form1.cs",
+              "ToolTip": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Form1.cs [Tasar\u0131m]",
+              "RelativeToolTip": "WareHouseController3\\Form1.cs [Tasar\u0131m]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-04T19:24:56.78Z",
+              "EditorCaption": " [Tasar\u0131m]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Form1.cs",
+              "RelativeDocumentMoniker": "WareHouseController3\\Form1.cs",
+              "ToolTip": "C:\\Users\\ahmet\\Desktop\\MYProjects\\WareHouseControl\\Try\\WareHouseController3\\WareHouseController3\\Form1.cs",
+              "RelativeToolTip": "WareHouseController3\\Form1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T22:44:08.505Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
