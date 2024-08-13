@@ -7,54 +7,17 @@ using System.Windows.Forms;
 
 namespace WareHouseController3
 {
-    // This class is used to add, delete, update, or perform different operations on products in the database
-    internal class ProductDal
+    // Product işlemleri için sınıf, CrudGenerics'ten türetilmiş
+    // Burada Product sınıfı ile ilgili işlemler yapılır
+    // Productdal sınıfı CrudGenerics sınıfından türetilmiştir ve bu sınıfın özelliklerini kullanır
+    // Örneğin Add, Update, Delete, GetAll gibi
+    // Fakat ayrıca Search metodu eklenmiştir, bunu CrudGenerics sınıfında bulamayız
+    // Bu search metodu Product sınıfı ile ilgili özel bir işlem olduğu için ProductDal sınıfına eklenmiştir
+    // Bunu gibi başka özel işlemler de eklenebilir, temel metodlar CrudGenerics sınıfında bulunur
+    // Özel metodlar ise ProductDal sınıfı gibi ayrı sınıflarda tanımlanır
+    internal class ProductDal : CrudGenerics<Product>
     {
-        // Add a product to the database
-        public void Add(Product product)
-        {
-            using (var context = new WareHouseControlContext())
-            {
-                context.Products.Add(product);
-                context.SaveChanges();
-                MessageBox.Show("Product Added");
-            }
-        }
-
-        // Get all products from the database
-        public List<Product> GetAll()
-        {
-            using (var context = new WareHouseControlContext())
-            {
-                return context.Products.ToList();
-            }
-        }
-
-        // Update an existing product in the database
-        public void Update(Product product)
-        {
-            using (var context = new WareHouseControlContext())
-            {
-                var entity = context.Entry(product);
-                entity.State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
-                MessageBox.Show("Product Updated");
-            }
-        }
-
-        // Delete a product from the database
-        public void Delete(Product product)
-        {
-            using (var context = new WareHouseControlContext())
-            {
-                var entity = context.Entry(product);
-                entity.State = System.Data.Entity.EntityState.Deleted;
-                context.SaveChanges();
-                MessageBox.Show("Product Deleted");
-            }
-        }
-
-        // Search for products by name in the database
+        // Ürün arama işlemi
         public List<Product> Search(string key)
         {
             using (var context = new WareHouseControlContext())
@@ -62,10 +25,34 @@ namespace WareHouseController3
                 return context.Products.Where(p => p.Name.Contains(key)).ToList();
             }
         }
+        public List<Product> GetByUnitPrice(decimal min, decimal max)
+        {
+            using (var context = new WareHouseControlContext())
+            {
+
+                return context.Products.Where(p => p.UnitPrice >= min && p.UnitPrice <= max).ToList();
+                //return context.Products.Where(p => p.UnitPrice == product.UnitPrice).ToList();
+            }
+        }
+        public List<Product> GetByStockAmount(int min, int max) {
+            using (var context = new WareHouseControlContext())
+            {
+
+                return context.Products.Where(p => p.StockAmount >= min && p.StockAmount < max).ToList();
+                //return context.Products.Where(p => p.UnitPrice >= min && p.UnitPrice <= max).ToList();
+            }
+        }
+        public List<Product> GetByCategoryId(int id)
+        {
+            using(var context = new WareHouseControlContext())
+            {
+                return context.Products.Where(p => p.ProductCategoryId == id).ToList();
+            }
+        }
     }
 }
 
-/*
+/* çalışankod1
 using System;
 using System.Collections.Generic;
 using System.Linq;

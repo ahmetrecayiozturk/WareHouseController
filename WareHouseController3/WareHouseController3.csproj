@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrudGenerics.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +70,10 @@
     <Compile Include="Migrations\202408050124343_InitialCreate1.cs" />
     <Compile Include="Migrations\202408050124343_InitialCreate1.Designer.cs">
       <DependentUpon>202408050124343_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408110238203_UpdateProductModel.cs" />
+    <Compile Include="Migrations\202408110238203_UpdateProductModel.Designer.cs">
+      <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -84,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202408050124343_InitialCreate1.resx">
       <DependentUpon>202408050124343_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408110238203_UpdateProductModel.resx">
+      <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
