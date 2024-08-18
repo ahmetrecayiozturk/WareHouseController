@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WareHouseController3
 {
@@ -14,6 +15,8 @@ namespace WareHouseController3
         void AddNew(T entity);
         void Update(T entity);
         void Delete(T entity);
+        List<T> Search(string key);
+
         List<T> GetAll();
     }
 
@@ -63,6 +66,29 @@ namespace WareHouseController3
             using (var context = new WareHouseControlContext())
             {
                 return context.Set<T>().ToList();
+            }
+        }
+        /*
+        public List<T> Search(string key)
+        {
+            using (var context = new WareHouseControlContext())
+            {
+                return context.Set<T>().SqlQuery("select * from Products where Name like '%" + key + "%'").ToList();
+            }
+        }*/
+        public List<T> Search(string key)
+        {
+            using (var context = new WareHouseControlContext())
+            {
+                // Sadece 'Product' türünde, 'Name' özelliğine göre arama yapıyoruz.
+                if (typeof(T) == typeof(Product))
+                {
+                    return context.Set<T>()
+                                  .Where(p => ((Product)(object)p).Name.Contains(key))
+                                  .ToList();
+                }
+
+                throw new InvalidOperationException("Search only supports Product type with Name property.");
             }
         }
     }

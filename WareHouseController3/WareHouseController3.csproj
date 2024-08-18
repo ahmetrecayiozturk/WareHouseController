@@ -57,12 +57,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrudGenerics.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerOrderForm.Designer.cs">
+      <DependentUpon>CustomerOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClass.cs" />
     <Compile Include="Migrations\202408050028371_InitialCreate.cs" />
     <Compile Include="Migrations\202408050028371_InitialCreate.Designer.cs">
       <DependentUpon>202408050028371_InitialCreate.cs</DependentUpon>
@@ -75,12 +83,36 @@
     <Compile Include="Migrations\202408110238203_UpdateProductModel.Designer.cs">
       <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202408161610541_InitialCreate2.cs" />
+    <Compile Include="Migrations\202408161610541_InitialCreate2.Designer.cs">
+      <DependentUpon>202408161610541_InitialCreate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408161700345_InitialCreate3.cs" />
+    <Compile Include="Migrations\202408161700345_InitialCreate3.Designer.cs">
+      <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderForm.Designer.cs">
+      <DependentUpon>OrderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderHelper.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductDal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrder.cs" />
+    <Compile Include="PurchaseOrderDal.cs" />
+    <Compile Include="Reflections.cs" />
+    <Compile Include="SalesOrder.cs" />
+    <Compile Include="SalesOrderDal.cs" />
+    <Compile Include="Supplier.cs" />
     <Compile Include="WareHouseControlContext.cs" />
+    <EmbeddedResource Include="CustomerOrderForm.resx">
+      <DependentUpon>CustomerOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +124,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202408110238203_UpdateProductModel.resx">
       <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408161610541_InitialCreate2.resx">
+      <DependentUpon>202408161610541_InitialCreate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408161700345_InitialCreate3.resx">
+      <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderForm.resx">
+      <DependentUpon>OrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

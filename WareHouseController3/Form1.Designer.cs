@@ -55,6 +55,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.categoryidvalue = new System.Windows.Forms.MaskedTextBox();
+            this.customerorderbtn = new System.Windows.Forms.Button();
+            this.supplierorderbtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,7 +72,7 @@
             // 
             // deleteproduct
             // 
-            this.deleteproduct.Location = new System.Drawing.Point(717, 474);
+            this.deleteproduct.Location = new System.Drawing.Point(434, 474);
             this.deleteproduct.Name = "deleteproduct";
             this.deleteproduct.Size = new System.Drawing.Size(128, 36);
             this.deleteproduct.TabIndex = 4;
@@ -80,7 +82,7 @@
             // 
             // updateproduct
             // 
-            this.updateproduct.Location = new System.Drawing.Point(375, 474);
+            this.updateproduct.Location = new System.Drawing.Point(248, 474);
             this.updateproduct.Name = "updateproduct";
             this.updateproduct.Size = new System.Drawing.Size(128, 36);
             this.updateproduct.TabIndex = 5;
@@ -298,9 +300,31 @@
             this.categoryidvalue.TabIndex = 57;
             this.categoryidvalue.Text = " ";
             // 
+            // customerorderbtn
+            // 
+            this.customerorderbtn.Location = new System.Drawing.Point(871, 474);
+            this.customerorderbtn.Name = "customerorderbtn";
+            this.customerorderbtn.Size = new System.Drawing.Size(128, 36);
+            this.customerorderbtn.TabIndex = 58;
+            this.customerorderbtn.Text = "CustomerOrder";
+            this.customerorderbtn.UseVisualStyleBackColor = true;
+            this.customerorderbtn.Click += new System.EventHandler(this.customerorderbtn_Click);
+            // 
+            // supplierorderbtn
+            // 
+            this.supplierorderbtn.Location = new System.Drawing.Point(662, 474);
+            this.supplierorderbtn.Name = "supplierorderbtn";
+            this.supplierorderbtn.Size = new System.Drawing.Size(128, 36);
+            this.supplierorderbtn.TabIndex = 59;
+            this.supplierorderbtn.Text = "Supplier Order";
+            this.supplierorderbtn.UseVisualStyleBackColor = true;
+            this.supplierorderbtn.Click += new System.EventHandler(this.supplierorderbtn_Click);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(932, 509);
+            this.ClientSize = new System.Drawing.Size(1000, 566);
+            this.Controls.Add(this.supplierorderbtn);
+            this.Controls.Add(this.customerorderbtn);
             this.Controls.Add(this.categoryidvalue);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -371,6 +395,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.MaskedTextBox categoryidvalue;
+        private System.Windows.Forms.Button customerorderbtn;
+        private System.Windows.Forms.Button supplierorderbtn;
     }
 }
 
