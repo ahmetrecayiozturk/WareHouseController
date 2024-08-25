@@ -118,7 +118,7 @@
             // 
             // salesPaymentCondition
             // 
-            this.salesPaymentCondition.Location = new System.Drawing.Point(445, 474);
+            this.salesPaymentCondition.Location = new System.Drawing.Point(668, 475);
             this.salesPaymentCondition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.salesPaymentCondition.Name = "salesPaymentCondition";
             this.salesPaymentCondition.Size = new System.Drawing.Size(150, 22);
@@ -128,7 +128,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(304, 480);
+            this.label5.Location = new System.Drawing.Point(453, 480);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 16);
             this.label5.TabIndex = 16;
@@ -179,7 +179,7 @@
             this.dgwSalesOrder.Name = "dgwSalesOrder";
             this.dgwSalesOrder.RowHeadersWidth = 51;
             this.dgwSalesOrder.RowTemplate.Height = 24;
-            this.dgwSalesOrder.Size = new System.Drawing.Size(984, 343);
+            this.dgwSalesOrder.Size = new System.Drawing.Size(1258, 343);
             this.dgwSalesOrder.TabIndex = 21;
             this.dgwSalesOrder.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
@@ -258,6 +258,7 @@
             this.addCustomer.TabIndex = 30;
             this.addCustomer.Text = "Add Customer";
             this.addCustomer.UseVisualStyleBackColor = true;
+            this.addCustomer.Click += new System.EventHandler(this.addCustomer_Click);
             // 
             // addCustomerOrder
             // 
@@ -294,7 +295,7 @@
             // 
             // orderConfirmText
             // 
-            this.orderConfirmText.Location = new System.Drawing.Point(1015, 440);
+            this.orderConfirmText.Location = new System.Drawing.Point(1353, 442);
             this.orderConfirmText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.orderConfirmText.Name = "orderConfirmText";
             this.orderConfirmText.Size = new System.Drawing.Size(178, 22);
@@ -302,7 +303,7 @@
             // 
             // confirmOrderBtn
             // 
-            this.confirmOrderBtn.Location = new System.Drawing.Point(667, 405);
+            this.confirmOrderBtn.Location = new System.Drawing.Point(994, 394);
             this.confirmOrderBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.confirmOrderBtn.Name = "confirmOrderBtn";
             this.confirmOrderBtn.Size = new System.Drawing.Size(280, 92);
@@ -313,7 +314,7 @@
             // 
             // confirmBackConditionBtn
             // 
-            this.confirmBackConditionBtn.Location = new System.Drawing.Point(667, 501);
+            this.confirmBackConditionBtn.Location = new System.Drawing.Point(994, 501);
             this.confirmBackConditionBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.confirmBackConditionBtn.Name = "confirmBackConditionBtn";
             this.confirmBackConditionBtn.Size = new System.Drawing.Size(280, 91);
@@ -325,7 +326,7 @@
             // 
             // confirmBackCondition
             // 
-            this.confirmBackCondition.Location = new System.Drawing.Point(1015, 535);
+            this.confirmBackCondition.Location = new System.Drawing.Point(1353, 535);
             this.confirmBackCondition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.confirmBackCondition.Name = "confirmBackCondition";
             this.confirmBackCondition.Size = new System.Drawing.Size(178, 22);
@@ -333,7 +334,7 @@
             // 
             // searchCustomerName
             // 
-            this.searchCustomerName.Location = new System.Drawing.Point(1015, 11);
+            this.searchCustomerName.Location = new System.Drawing.Point(1320, 11);
             this.searchCustomerName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchCustomerName.Name = "searchCustomerName";
             this.searchCustomerName.Size = new System.Drawing.Size(211, 22);
@@ -342,7 +343,7 @@
             // 
             // showAllOrders
             // 
-            this.showAllOrders.Location = new System.Drawing.Point(547, 2);
+            this.showAllOrders.Location = new System.Drawing.Point(668, 2);
             this.showAllOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.showAllOrders.Name = "showAllOrders";
             this.showAllOrders.Size = new System.Drawing.Size(249, 41);
@@ -365,7 +366,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(812, 14);
+            this.label11.Location = new System.Drawing.Point(1063, 14);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(179, 16);
             this.label11.TabIndex = 43;
@@ -375,7 +376,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 603);
+            this.ClientSize = new System.Drawing.Size(1556, 603);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.showUnpaidOrders);
             this.Controls.Add(this.showAllOrders);

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CrudGenerics.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="CustomerDal.cs" />
     <Compile Include="CustomerOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +92,18 @@
     <Compile Include="Migrations\202408161700345_InitialCreate3.Designer.cs">
       <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202408240123103_InitialCreate4.cs" />
+    <Compile Include="Migrations\202408240123103_InitialCreate4.Designer.cs">
+      <DependentUpon>202408240123103_InitialCreate4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408240145551_InitialCreate5.cs" />
+    <Compile Include="Migrations\202408240145551_InitialCreate5.Designer.cs">
+      <DependentUpon>202408240145551_InitialCreate5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408251021446_InitialCreate6.cs" />
+    <Compile Include="Migrations\202408251021446_InitialCreate6.Designer.cs">
+      <DependentUpon>202408251021446_InitialCreate6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
@@ -109,6 +122,7 @@
     <Compile Include="SalesOrder.cs" />
     <Compile Include="SalesOrderDal.cs" />
     <Compile Include="Supplier.cs" />
+    <Compile Include="SupplierDal.cs" />
     <Compile Include="WareHouseControlContext.cs" />
     <EmbeddedResource Include="CustomerOrderForm.resx">
       <DependentUpon>CustomerOrderForm.cs</DependentUpon>
@@ -130,6 +144,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202408161700345_InitialCreate3.resx">
       <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408240123103_InitialCreate4.resx">
+      <DependentUpon>202408240123103_InitialCreate4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408240145551_InitialCreate5.resx">
+      <DependentUpon>202408240145551_InitialCreate5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408251021446_InitialCreate6.resx">
+      <DependentUpon>202408251021446_InitialCreate6.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>

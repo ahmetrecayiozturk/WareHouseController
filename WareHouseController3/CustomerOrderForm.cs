@@ -14,6 +14,8 @@ namespace WareHouseController3
     public partial class CustomerOrderForm : Form
     {
         SalesOrderDal _salesOrderDal = new SalesOrderDal();
+        ProductDal _productDal = new ProductDal();
+        CustomerDal _customerDal = new CustomerDal();
         public CustomerOrderForm()
         {
             InitializeComponent();
@@ -53,11 +55,12 @@ namespace WareHouseController3
         {
             salesProductName.Text = dgwSalesOrder.CurrentRow.Cells[1].Value.ToString();
             customerName.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
-            salesQuantity.Text = dgwSalesOrder.CurrentRow.Cells[3].Value.ToString();
-            salesTotalPrice.Text = dgwSalesOrder.CurrentRow.Cells[4].Value.ToString();
-            salesOrderDate.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
-            salesCondition.Text = dgwSalesOrder.CurrentRow.Cells[6].Value.ToString();
-            salesPaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[6].Value.ToString();
+            salesQuantity.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
+            salesTotalPrice.Text = (product.UnitPrice * Convert.ToInt32(salesQuantity.Text)).ToString();
+            salesOrderDate.Text = dgwSalesOrder.CurrentRow.Cells[7].Value.ToString();
+            salesCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
+            salesPaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
             LoadProducts();
         }
 
@@ -69,15 +72,67 @@ namespace WareHouseController3
             if (!InputValidator.ValidateDecimal(salesTotalPrice.Text, out decimal totalprice)) return;
             if (!InputValidator.ValidateDateTime(salesOrderDate.Text, out DateTime orderdate)) return;
             if (!InputValidator.ValidateBoolean(salesCondition.Text, out bool paidcondition)) return;
+
+            var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customername);
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
+            if (product == null)
+            {
+                MessageBox.Show("Product not found");
+                return;
+            }
+            var tottalprice = product.UnitPrice * quantity;
+            if(product.StockAmount < quantity)
+            {
+                MessageBox.Show("There is not enough stock");
+                return;
+            }
+            if (customer == null)
+            {
+                MessageBox.Show("Customer not found");
+                return;
+            }
+            if (product == null)
+            {
+                MessageBox.Show("Product not found");
+                return;
+            }
+            if (quantity < 0)
+            {
+                MessageBox.Show("Quantity can't be negative");
+                return;
+            }
+            if(quantity == 0)
+            {
+                MessageBox.Show("Quantity can't be zero");
+                return;
+            }
+            if (totalprice < 0)
+            {
+                MessageBox.Show("Total price can't be negative");
+                return;
+            }
+            if (orderdate > DateTime.Now)
+            {
+                MessageBox.Show("Order date can't be in the future");
+                return;
+            }
+
             _salesOrderDal.AddNew(new SalesOrder
             {
                 ProductName = salesproductname,
                 CustomerName = customername,
+                CustomerAddress = customer.Address,
+                CustomerContact = customer.ContactInfo,
                 Quantity = quantity,
-                TotalPrice = totalprice,
+                TotalPrice = tottalprice,
                 OrderDate = orderdate,
                 IsPaid = paidcondition
             });
+            var entity = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
+            entity.StockAmount -= quantity;
+            _productDal.Update(entity);
+            Form1 form1 = new Form1();
+            form1.LoadProducts();
             LoadProducts();
         }
 
@@ -129,6 +184,10 @@ namespace WareHouseController3
         private void button3_Click(object sender, EventArgs e)
         {
             var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
+            var totallprice = product.UnitPrice * Convert.ToInt32(salesQuantity.Text);
+            var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customerName.Text);
+
             if (entity != null)
             {
                 if (!InputValidator.ValidateString(salesProductName.Text, out string salesproductname)) return;
@@ -140,10 +199,47 @@ namespace WareHouseController3
               
                 entity.ProductName = salesproductname;
                 entity.CustomerName = customername;
+                entity.CustomerAddress = customer.Address;
+                entity.CustomerContact = customer.ContactInfo;
                 entity.Quantity = quantity;
-                entity.TotalPrice = totalprice;
+                entity.TotalPrice = totallprice;
                 entity.OrderDate = orderdate;
                 entity.IsPaid = paidcondition;
+                if (product == null)
+                {
+                    MessageBox.Show("Product not found");
+                    return;
+                }
+                if (product.StockAmount < quantity)
+                {
+                    MessageBox.Show("There is not enough stock");
+                    return;
+                }
+                if (customer == null)
+                {
+                    MessageBox.Show("Customer not found");
+                    return;
+                }
+                if (entity.IsPaid == true)
+                {
+                    MessageBox.Show("You can't update a paid order");
+                    return;
+                }
+                if (entity.Quantity < 0)
+                {
+                    MessageBox.Show("Quantity can't be negative");
+                    return;
+                }
+                if (entity.TotalPrice < 0)
+                {
+                    MessageBox.Show("Total price can't be negative");
+                    return;
+                }
+                if (entity.OrderDate > DateTime.Now)
+                {
+                    MessageBox.Show("Order date can't be in the future");
+                    return;
+                }
                 _salesOrderDal.Update(entity);
                
                 LoadProducts();
@@ -153,9 +249,12 @@ namespace WareHouseController3
         private void button5_Click(object sender, EventArgs e)
         {
             var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
             if (entity != null)
             {
                 _salesOrderDal.Delete(entity);
+                product.StockAmount += entity.Quantity;
+                _productDal.Update(product);
                 LoadProducts();
             }
         }
@@ -185,6 +284,16 @@ namespace WareHouseController3
                 var result = context.SalesOrders.Where(p => p.IsPaid == false).ToList();
                 dgwSalesOrder.DataSource = result;
             }
+        }
+
+        private void addCustomer_Click(object sender, EventArgs e)
+        {
+            _customerDal.AddNew(new Customer
+            {
+                Name = addCustomerName.Text,
+                ContactInfo = customerContact.Text,
+                Address = customerAddress.Text
+            });
         }
     }
 

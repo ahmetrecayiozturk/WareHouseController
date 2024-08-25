@@ -57,6 +57,8 @@
             this.categoryidvalue = new System.Windows.Forms.MaskedTextBox();
             this.customerorderbtn = new System.Windows.Forms.Button();
             this.supplierorderbtn = new System.Windows.Forms.Button();
+            this.refresh = new System.Windows.Forms.Button();
+            this.showAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -320,9 +322,31 @@
             this.supplierorderbtn.UseVisualStyleBackColor = true;
             this.supplierorderbtn.Click += new System.EventHandler(this.supplierorderbtn_Click);
             // 
+            // refresh
+            // 
+            this.refresh.Location = new System.Drawing.Point(49, 3);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(120, 32);
+            this.refresh.TabIndex = 60;
+            this.refresh.Text = "Refresh Products";
+            this.refresh.UseVisualStyleBackColor = true;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
+            // 
+            // showAll
+            // 
+            this.showAll.Location = new System.Drawing.Point(248, 5);
+            this.showAll.Name = "showAll";
+            this.showAll.Size = new System.Drawing.Size(142, 36);
+            this.showAll.TabIndex = 61;
+            this.showAll.Text = "Show All";
+            this.showAll.UseVisualStyleBackColor = true;
+            this.showAll.Click += new System.EventHandler(this.showAll_Click);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1000, 566);
+            this.Controls.Add(this.showAll);
+            this.Controls.Add(this.refresh);
             this.Controls.Add(this.supplierorderbtn);
             this.Controls.Add(this.customerorderbtn);
             this.Controls.Add(this.categoryidvalue);
@@ -397,6 +421,8 @@
         private System.Windows.Forms.MaskedTextBox categoryidvalue;
         private System.Windows.Forms.Button customerorderbtn;
         private System.Windows.Forms.Button supplierorderbtn;
+        private System.Windows.Forms.Button refresh;
+        private System.Windows.Forms.Button showAll;
     }
 }
 

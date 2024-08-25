@@ -5,16 +5,17 @@ using System.Windows.Forms;
 
 namespace WareHouseController3
 {
-    public partial class OrderForm : Form
+    public partial class orderConfirmText2 : Form
     {
         private readonly SalesOrderDal _salesOrderDal = new SalesOrderDal();
         private readonly PurchaseOrderDal _purchaseOrderDal = new PurchaseOrderDal();
         ProductDal _productDal = new ProductDal();
-        public OrderForm()
+        SupplierDal _supplierDal = new SupplierDal();
+        public orderConfirmText2()
         {
             InitializeComponent();
         }
-
+        /*
         private void LoadOrders()
         {
             var unpaidSalesOrders = _salesOrderDal.GetUnpaidOrders();
@@ -23,8 +24,12 @@ namespace WareHouseController3
             // Tabloya veya listbox'a veri yükleyin
             // Örneğin: salesOrdersDataGridView.DataSource = unpaidSalesOrders;
             // Örneğin: purchaseOrdersDataGridView.DataSource = unpaidPurchaseOrders;
-        }
+        }*/
 
+        public void LoadOrders()
+        {
+            dgwSalesOrder.DataSource = _purchaseOrderDal.GetAll();
+        }
         private void OrderForm_Load(object sender, EventArgs e)
         {
             LoadOrders();
@@ -103,6 +108,261 @@ namespace WareHouseController3
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == entity.ProductName);
+            var supplier = _supplierDal.GetAll().FirstOrDefault(p => p.Name == entity.SupplierName);
+            if (!InputValidator.ValidateString(productName.Text, out string productname)) return;
+            if (!InputValidator.ValidateString(supplierName.Text, out string suppliername)) return;
+            if (!InputValidator.ValidateInt(productQuantity.Text, out int quantity)) return;
+            if (!InputValidator.ValidateDecimal(supplierTotalPrice.Text, out decimal totalprice)) return;
+            if (!InputValidator.ValidateDateTime(supplierDate.Text, out DateTime orderdate)) return;
+            if (!InputValidator.ValidateBoolean(IsDelivered.Text, out bool paidcondition)) return;
+            if (entity != null)
+            {
+                entity.ProductName = productname;
+                entity.SupplierName = suppliername;
+                entity.Quantity = quantity;
+                entity.TotalPrice = totalprice;
+                entity.OrderDate = orderdate;
+                entity.IsPaid = paidcondition;
+                _purchaseOrderDal.Update(entity);
+                if (product == null)
+                {
+                    MessageBox.Show("Product not found");
+                    return;
+                }
+                if (product.StockAmount < quantity)
+                {
+                    MessageBox.Show("There is not enough stock");
+                    return;
+                }
+                if (supplier == null)
+                {
+                    MessageBox.Show("Customer not found");
+                    return;
+                }
+                if (entity.IsPaid == true)
+                {
+                    MessageBox.Show("You can't update a paid order");
+                    return;
+                }
+                if (entity.Quantity < 0)
+                {
+                    MessageBox.Show("Quantity can't be negative");
+                    return;
+                }
+                if (entity.TotalPrice < 0)
+                {
+                    MessageBox.Show("Total price can't be negative");
+                    return;
+                }
+                if (entity.OrderDate > DateTime.Now)
+                {
+                    MessageBox.Show("Order date can't be in the future");
+                    return;
+                }
+                LoadOrders();
+            }
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgwSalesOrder_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            productName.Text = dgwSalesOrder.CurrentRow.Cells[1].Value.ToString();
+            supplierName.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
+            productQuantity.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productName.Text);
+            supplierTotalPrice.Text = (product.UnitPrice * Convert.ToInt32(productQuantity.Text)).ToString();
+            supplierDate.Text = dgwSalesOrder.CurrentRow.Cells[7].Value.ToString();
+            IsDelivered.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
+            purchasePaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
+            LoadOrders();
+        }
+
+        private void addSupplierOrder_Click(object sender, EventArgs e)
+        {
+            if (!InputValidator.ValidateString(productName.Text, out string productname)) return;
+            if (!InputValidator.ValidateString(supplierName.Text, out string suppliername)) return;
+            if (!InputValidator.ValidateInt(productQuantity.Text, out int quantity)) return;
+            if (!InputValidator.ValidateDecimal(supplierTotalPrice.Text, out decimal totalprice)) return;
+            if (!InputValidator.ValidateDateTime(supplierDate.Text, out DateTime orderdate)) return;
+            if (!InputValidator.ValidateBoolean(IsDelivered.Text, out bool paidcondition)) return;
+
+            var supplier = _supplierDal.GetAll().FirstOrDefault(p => p.Name == suppliername);
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productname);
+            if (product == null)
+            {
+                MessageBox.Show("Product not found");
+                return;
+            }
+            var tottalprice = product.UnitPrice * quantity;
+            if (product.StockAmount < quantity)
+            {
+                MessageBox.Show("There is not enough stock");
+                return;
+            }
+            if (supplier == null)
+            {
+                MessageBox.Show("Customer not found");
+                return;
+            }
+            if (product == null)
+            {
+                MessageBox.Show("Product not found");
+                return;
+            }
+            if (quantity < 0)
+            {
+                MessageBox.Show("Quantity can't be negative");
+                return;
+            }
+            if (quantity == 0)
+            {
+                MessageBox.Show("Quantity can't be zero");
+                return;
+            }
+            if (totalprice < 0)
+            {
+                MessageBox.Show("Total price can't be negative");
+                return;
+            }
+            if (orderdate > DateTime.Now)
+            {
+                MessageBox.Show("Order date can't be in the future");
+                return;
+            }
+            _purchaseOrderDal.AddNew(new PurchaseOrder
+            {
+                ProductName = productname,
+                SupplierName = suppliername,
+                Address = supplier.Address,
+                ContactInfo = supplier.ContactInfo,
+                Quantity = quantity,
+                TotalPrice = tottalprice,
+                OrderDate = orderdate,
+                IsPaid = paidcondition
+            });
+            
+            LoadOrders();
+            /*
+            if (paidcondition == true)
+            {
+                var entity1 = _productDal.GetAll().FirstOrDefault(p => p.Name == productname);
+                entity1.StockAmount += quantity;
+                _productDal.Update(entity1);
+            }
+            //Burası İsDelivery==true ise stokta arttırma işlemi yapılacak
+            if (paidcondition == true)
+            {
+                var entity1 = _productDal.GetAll().FirstOrDefault(p => p.Name == productname);
+                entity1.StockAmount += quantity;
+                _productDal.Update(entity1);
+            }
+            var entity = _productDal.GetAll().FirstOrDefault(p => p.Name == productname);
+            entity.StockAmount -= quantity;
+            _productDal.Update(entity);
+            Form1 form1 = new Form1();
+            form1.LoadProducts();
+            LoadOrders();
+            */
+
+        }
+
+        private void addCustomer_Click(object sender, EventArgs e)
+        {
+            if (!InputValidator.ValidateString(addSupplierName.Text, out string suppliername)) return;
+            if (!InputValidator.ValidateString(addSupplierContact.Text, out string suppliercontact)) return;
+            if (!InputValidator.ValidateString(supplierAddress.Text, out string supplieraddress)) return;
+            _supplierDal.AddNew(new Supplier{
+                Name = suppliername,
+                ContactInfo = suppliercontact,
+                Address = supplieraddress
+            });
+
+        }
+
+        private void deleteSupplier_Click(object sender, EventArgs e)
+        {
+            var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productName.Text);
+            if (entity != null)
+            {
+                _purchaseOrderDal.Delete(entity);
+                if(entity.IsPaid == true)
+                {
+                    product.StockAmount -= entity.Quantity;
+                    _productDal.Update(product);
+                }
+                _productDal.Update(product);
+                LoadOrders();
+            }
+        }
+
+        private void confirmOrderBtn_Click(object sender, EventArgs e)
+        {
+            if (orderConfirmText.Text.ToLower() == "understand")
+            {
+                var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
+                var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
+
+                if (entity != null)
+                {
+                    entity.IsPaid = true;
+                    _purchaseOrderDal.Update(entity); // Veritabanında güncelleme yapın
+                    LoadOrders(); // Verileri yeniden yükleyin
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter the 'understand' word to confirm the order");
+            }
+            /*
+            string confirmText = orderConfirmText.Text.ToLower();
+            var purchaseOrder = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+            if (confirmText == "understand")
+            {
+                purchaseOrder.IsPaid = true;
+                MessageBox.Show("Order confirmed");
+            }
+            else
+            {
+                MessageBox.Show("Order not confirmed, please text 'understand' correctly");
+            }
+            */
+        }
+
+        private void confirmBackConditionBtn_Click(object sender, EventArgs e)
+        {
+            if (orderConfirmText3.Text.ToLower() == "understand")
+            {
+                var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
+                var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
+
+                if (entity != null)
+                {
+                    entity.IsPaid = false;
+                    _purchaseOrderDal.Update(entity); // Veritabanında güncelleme yapın
+                    LoadOrders(); // Verileri yeniden yükleyin
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter the 'understand' word to confirm the order");
+            }
         }
     }
 }

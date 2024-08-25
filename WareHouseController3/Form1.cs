@@ -12,12 +12,15 @@ namespace WareHouseController3
         {
             InitializeComponent();
         }
-
-        private void LoadProducts()
+        //Form1'in verilerini başka sayfalar aracılığı ile yükleyebilmek için LoadProducts metodunu public yaptık
+        public void LoadProducts()
         {
             dgw.DataSource = _productDal.GetAll();
         }
-
+        public void RefreshProducts()
+        {
+            dgw.Refresh();
+        }
         private void addproduct_Click(object sender, EventArgs e)
         {
             bool isExist = _productDal.GetAll().Any(p => p.Name == name.Text);
@@ -177,7 +180,7 @@ namespace WareHouseController3
 
         private void supplierorderbtn_Click(object sender, EventArgs e)
         {
-            OrderForm orderform = new OrderForm();
+            orderConfirmText2 orderform = new orderConfirmText2();
             orderform.Show();
             Form1 form1 = new Form1();
             form1.Hide();
@@ -227,7 +230,15 @@ namespace WareHouseController3
             customerOrderForm.Show();
         }
 
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            dgw.DataSource = _productDal.GetAll();
+        }
 
+        private void showAll_Click(object sender, EventArgs e)
+        {
+            dgw.DataSource = _productDal.GetAll();
+        }
     }
 }
 
