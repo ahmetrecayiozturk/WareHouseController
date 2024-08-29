@@ -16,6 +16,7 @@ namespace WareHouseController3
         public void LoadProducts()
         {
             dgw.DataSource = _productDal.GetAll();
+            dgw.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         public void RefreshProducts()
         {
@@ -27,9 +28,9 @@ namespace WareHouseController3
             if (!isExist)
 
             {
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if (!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
+                if (!InputValidator.ValidateDecimal(unitprice.Text.ToLower(), out decimal unitPrice)) return;
+                if (!InputValidator.ValidateInt(stockamount.Text.ToLower(), out int stockAmount)) return;
+                if (!InputValidator.ValidateInt(categoryid.Text.ToLower(), out int categoryId)) return;
                 _productDal.Add(new Product
                 {
                     Name = name.Text,
@@ -51,9 +52,9 @@ namespace WareHouseController3
             if (entity != null)
             {
                 entity.Name = name.Text;
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if(!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
+                if (!InputValidator.ValidateDecimal(unitprice.Text.ToLower(), out decimal unitPrice)) return;
+                if(!InputValidator.ValidateInt(stockamount.Text.ToLower(), out int stockAmount)) return;
+                if (!InputValidator.ValidateInt(categoryid.Text.ToLower(), out int categoryId)) return;
                 entity.UnitPrice = unitPrice;
                 entity.StockAmount = stockAmount;
                 entity.ProductCategoryId = categoryId;
@@ -91,7 +92,7 @@ namespace WareHouseController3
 
         private void searchtext_TextChanged(object sender, EventArgs e)
         {
-            var result = _productDal.Search(searchtext.Text);
+            var result = _productDal.Search(searchtext.Text.ToLower());
             dgw.DataSource = result;
         }
 
@@ -136,7 +137,7 @@ namespace WareHouseController3
         private void filtercategoryid_Click(object sender, EventArgs e)
         {
             
-            if(!InputValidator.ValidateInt(categoryidvalue.Text, out int categoryId)) return; 
+            if(!InputValidator.ValidateInt(categoryidvalue.Text.ToLower(), out int categoryId)) return; 
             var result = _productDal.GetByCategoryId(id: categoryId);
             dgw.DataSource = result;
             
@@ -152,8 +153,8 @@ namespace WareHouseController3
         */
         private void filterunitprice_Click(object sender, EventArgs e)
         {
-                if (!InputValidator.ValidateDecimal(minprice.Text, out decimal minPrice)) return;
-                if (!InputValidator.ValidateDecimal(maxprice.Text, out decimal maxPrice)) return;
+                if (!InputValidator.ValidateDecimal(minprice.Text.ToLower(), out decimal minPrice)) return;
+                if (!InputValidator.ValidateDecimal(maxprice.Text.ToLower(), out decimal maxPrice)) return;
 
                 var result = _productDal.GetByUnitPrice(min: minPrice, max: maxPrice);
                 dgw.DataSource = result;
@@ -171,8 +172,8 @@ namespace WareHouseController3
         private void filterstockamount_Click(object sender, EventArgs e)
         {
 
-            if (!InputValidator.ValidateInt(minstock.Text, out int minStock)) return;
-            if (!InputValidator.ValidateInt(maxstock.Text, out int maxStock)) return;
+            if (!InputValidator.ValidateInt(minstock.Text.ToLower(), out int minStock)) return;
+            if (!InputValidator.ValidateInt(maxstock.Text.ToLower(), out int maxStock)) return;
             var result = _productDal.GetByStockAmount(min: minStock, max: maxStock);
             dgw.DataSource = result;
             
@@ -238,6 +239,18 @@ namespace WareHouseController3
         private void showAll_Click(object sender, EventArgs e)
         {
             dgw.DataSource = _productDal.GetAll();
+        }
+
+        private void showSuppliers_Click(object sender, EventArgs e)
+        {
+            Form Supplier = new Suppliers();
+            Supplier.Show();
+        }
+
+        private void showCustomers_Click(object sender, EventArgs e)
+        {
+            Form Customers = new Customers();
+            Customers.Show();
         }
     }
 }

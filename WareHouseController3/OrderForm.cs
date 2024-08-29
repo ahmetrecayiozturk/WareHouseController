@@ -29,6 +29,8 @@ namespace WareHouseController3
         public void LoadOrders()
         {
             dgwSalesOrder.DataSource = _purchaseOrderDal.GetAll();
+            dgwSalesOrder.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
         private void OrderForm_Load(object sender, EventArgs e)
         {
@@ -120,10 +122,11 @@ namespace WareHouseController3
             var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == entity.ProductName);
             var supplier = _supplierDal.GetAll().FirstOrDefault(p => p.Name == entity.SupplierName);
+            //var price = product.UnitPrice;
+            var totalprice = product.UnitPrice * Convert.ToInt32(productQuantity.Text);
             if (!InputValidator.ValidateString(productName.Text, out string productname)) return;
             if (!InputValidator.ValidateString(supplierName.Text, out string suppliername)) return;
             if (!InputValidator.ValidateInt(productQuantity.Text, out int quantity)) return;
-            if (!InputValidator.ValidateDecimal(supplierTotalPrice.Text, out decimal totalprice)) return;
             if (!InputValidator.ValidateDateTime(supplierDate.Text, out DateTime orderdate)) return;
             if (!InputValidator.ValidateBoolean(IsDelivered.Text, out bool paidcondition)) return;
             if (entity != null)
@@ -147,7 +150,7 @@ namespace WareHouseController3
                 }
                 if (supplier == null)
                 {
-                    MessageBox.Show("Customer not found");
+                    MessageBox.Show("Supplier not found");
                     return;
                 }
                 if (entity.IsPaid == true)
@@ -171,6 +174,7 @@ namespace WareHouseController3
                     return;
                 }
                 LoadOrders();
+                MessageBox.Show("Order updated");
             }
 
         }
@@ -186,7 +190,6 @@ namespace WareHouseController3
             supplierName.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
             productQuantity.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productName.Text);
-            supplierTotalPrice.Text = (product.UnitPrice * Convert.ToInt32(productQuantity.Text)).ToString();
             supplierDate.Text = dgwSalesOrder.CurrentRow.Cells[7].Value.ToString();
             IsDelivered.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
             purchasePaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
@@ -195,12 +198,11 @@ namespace WareHouseController3
 
         private void addSupplierOrder_Click(object sender, EventArgs e)
         {
-            if (!InputValidator.ValidateString(productName.Text, out string productname)) return;
-            if (!InputValidator.ValidateString(supplierName.Text, out string suppliername)) return;
-            if (!InputValidator.ValidateInt(productQuantity.Text, out int quantity)) return;
-            if (!InputValidator.ValidateDecimal(supplierTotalPrice.Text, out decimal totalprice)) return;
-            if (!InputValidator.ValidateDateTime(supplierDate.Text, out DateTime orderdate)) return;
-            if (!InputValidator.ValidateBoolean(IsDelivered.Text, out bool paidcondition)) return;
+            if (!InputValidator.ValidateString(productName.Text.ToLower(), out string productname)) return;
+            if (!InputValidator.ValidateString(supplierName.Text.ToLower(), out string suppliername)) return;
+            if (!InputValidator.ValidateInt(productQuantity.Text.ToLower(), out int quantity)) return;
+            if (!InputValidator.ValidateDateTime(supplierDate.Text.ToLower(), out DateTime orderdate)) return;
+            if (!InputValidator.ValidateBoolean(IsDelivered.Text.ToLower(), out bool paidcondition)) return;
 
             var supplier = _supplierDal.GetAll().FirstOrDefault(p => p.Name == suppliername);
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productname);
@@ -235,11 +237,6 @@ namespace WareHouseController3
                 MessageBox.Show("Quantity can't be zero");
                 return;
             }
-            if (totalprice < 0)
-            {
-                MessageBox.Show("Total price can't be negative");
-                return;
-            }
             if (orderdate > DateTime.Now)
             {
                 MessageBox.Show("Order date can't be in the future");
@@ -258,6 +255,7 @@ namespace WareHouseController3
             });
             
             LoadOrders();
+            MessageBox.Show("Order added");
             /*
             if (paidcondition == true)
             {
@@ -284,9 +282,9 @@ namespace WareHouseController3
 
         private void addCustomer_Click(object sender, EventArgs e)
         {
-            if (!InputValidator.ValidateString(addSupplierName.Text, out string suppliername)) return;
-            if (!InputValidator.ValidateString(addSupplierContact.Text, out string suppliercontact)) return;
-            if (!InputValidator.ValidateString(supplierAddress.Text, out string supplieraddress)) return;
+            if (!InputValidator.ValidateString(addSupplierName.Text.ToLower(), out string suppliername)) return;
+            if (!InputValidator.ValidateString(addSupplierContact.Text.ToLower(), out string suppliercontact)) return;
+            if (!InputValidator.ValidateString(supplierAddress.Text.ToLower(), out string supplieraddress)) return;
             _supplierDal.AddNew(new Supplier{
                 Name = suppliername,
                 ContactInfo = suppliercontact,
@@ -298,7 +296,7 @@ namespace WareHouseController3
         private void deleteSupplier_Click(object sender, EventArgs e)
         {
             var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
-            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productName.Text);
+            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == productName.Text.ToLower());
             if (entity != null)
             {
                 _purchaseOrderDal.Delete(entity);
@@ -309,6 +307,7 @@ namespace WareHouseController3
                 }
                 _productDal.Update(product);
                 LoadOrders();
+                MessageBox.Show("Order deleted");
             }
         }
 
@@ -318,12 +317,15 @@ namespace WareHouseController3
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
-
+                var product = _productDal.GetAll().FirstOrDefault(p => p.Name == entity.ProductName);
                 if (entity != null)
                 {
                     entity.IsPaid = true;
+                    product.StockAmount += entity.Quantity;
+                    _productDal.Update(product);
                     _purchaseOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadOrders(); // Verileri yeniden yükleyin
+                    MessageBox.Show("Order Delivered");
                 }
             }
             else
@@ -351,18 +353,55 @@ namespace WareHouseController3
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _purchaseOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
-
+                var product = _productDal.GetAll().FirstOrDefault(p => p.Name == entity.ProductName);
                 if (entity != null)
                 {
                     entity.IsPaid = false;
+                    product.StockAmount -= entity.Quantity;
+                    _productDal.Update(product);
                     _purchaseOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadOrders(); // Verileri yeniden yükleyin
+                    MessageBox.Show("Taking Back of  Delivering Order Confirmed");
                 }
             }
             else
             {
                 MessageBox.Show("Please enter the 'understand' word to confirm the order");
             }
+        }
+
+        private void searchCustomerName_TextChanged(object sender, EventArgs e)
+        {
+            using (var context = new WareHouseControlContext())
+            {
+                var result = context.PurchaseOrders.Where(p => p.SupplierName.Contains(searchSupplierName.Text.ToLower())).ToList();
+                dgwSalesOrder.DataSource = result;
+            }
+        }
+
+        private void showUnpaidOrders_Click(object sender, EventArgs e)
+        {
+            using(var context = new WareHouseControlContext())
+            {
+                var result = context.PurchaseOrders.Where(p => p.IsPaid == false).ToList();
+                dgwSalesOrder.DataSource = result;
+            }
+        }
+
+        private void showAllOrders_Click(object sender, EventArgs e)
+        {
+            var result = _purchaseOrderDal.GetAll();
+            dgwSalesOrder.DataSource = result;
+        }
+
+        private void purchasePaymentCondition_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void supplierTotalPrice_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

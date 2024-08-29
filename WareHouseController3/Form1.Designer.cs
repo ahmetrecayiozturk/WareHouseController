@@ -32,7 +32,6 @@
             this.deleteproduct = new System.Windows.Forms.Button();
             this.updateproduct = new System.Windows.Forms.Button();
             this.dgw = new System.Windows.Forms.DataGridView();
-            this.searchproduct = new System.Windows.Forms.Button();
             this.searchtext = new System.Windows.Forms.TextBox();
             this.name = new System.Windows.Forms.MaskedTextBox();
             this.unitprice = new System.Windows.Forms.MaskedTextBox();
@@ -59,12 +58,15 @@
             this.supplierorderbtn = new System.Windows.Forms.Button();
             this.refresh = new System.Windows.Forms.Button();
             this.showAll = new System.Windows.Forms.Button();
+            this.showCustomers = new System.Windows.Forms.Button();
+            this.showSuppliers = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).BeginInit();
             this.SuspendLayout();
             // 
             // addproduct
             // 
-            this.addproduct.Location = new System.Drawing.Point(49, 474);
+            this.addproduct.Location = new System.Drawing.Point(49, 527);
             this.addproduct.Name = "addproduct";
             this.addproduct.Size = new System.Drawing.Size(131, 36);
             this.addproduct.TabIndex = 3;
@@ -74,7 +76,7 @@
             // 
             // deleteproduct
             // 
-            this.deleteproduct.Location = new System.Drawing.Point(434, 474);
+            this.deleteproduct.Location = new System.Drawing.Point(445, 527);
             this.deleteproduct.Name = "deleteproduct";
             this.deleteproduct.Size = new System.Drawing.Size(128, 36);
             this.deleteproduct.TabIndex = 4;
@@ -84,7 +86,7 @@
             // 
             // updateproduct
             // 
-            this.updateproduct.Location = new System.Drawing.Point(248, 474);
+            this.updateproduct.Location = new System.Drawing.Point(248, 527);
             this.updateproduct.Name = "updateproduct";
             this.updateproduct.Size = new System.Drawing.Size(128, 36);
             this.updateproduct.TabIndex = 5;
@@ -95,95 +97,85 @@
             // dgw
             // 
             this.dgw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgw.Location = new System.Drawing.Point(49, 41);
+            this.dgw.Location = new System.Drawing.Point(49, 52);
             this.dgw.Name = "dgw";
             this.dgw.RowHeadersWidth = 51;
             this.dgw.RowTemplate.Height = 24;
-            this.dgw.Size = new System.Drawing.Size(607, 237);
+            this.dgw.Size = new System.Drawing.Size(626, 278);
             this.dgw.TabIndex = 6;
             this.dgw.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_CellContentClick);
             // 
-            // searchproduct
-            // 
-            this.searchproduct.Location = new System.Drawing.Point(495, 12);
-            this.searchproduct.Name = "searchproduct";
-            this.searchproduct.Size = new System.Drawing.Size(127, 23);
-            this.searchproduct.TabIndex = 7;
-            this.searchproduct.Text = "search";
-            this.searchproduct.UseVisualStyleBackColor = true;
-            this.searchproduct.Click += new System.EventHandler(this.searchproduct_Click);
-            // 
             // searchtext
             // 
-            this.searchtext.Location = new System.Drawing.Point(662, 13);
+            this.searchtext.Location = new System.Drawing.Point(741, 17);
             this.searchtext.Name = "searchtext";
-            this.searchtext.Size = new System.Drawing.Size(256, 22);
+            this.searchtext.Size = new System.Drawing.Size(256, 24);
             this.searchtext.TabIndex = 8;
             this.searchtext.TextChanged += new System.EventHandler(this.searchtext_TextChanged);
             // 
             // name
             // 
-            this.name.Location = new System.Drawing.Point(445, 295);
+            this.name.Location = new System.Drawing.Point(445, 336);
             this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(100, 22);
+            this.name.Size = new System.Drawing.Size(100, 24);
             this.name.TabIndex = 9;
             // 
             // unitprice
             // 
-            this.unitprice.Location = new System.Drawing.Point(445, 335);
+            this.unitprice.Location = new System.Drawing.Point(445, 382);
             this.unitprice.Name = "unitprice";
-            this.unitprice.Size = new System.Drawing.Size(100, 22);
+            this.unitprice.Size = new System.Drawing.Size(100, 24);
             this.unitprice.TabIndex = 10;
             // 
             // stockamount
             // 
-            this.stockamount.Location = new System.Drawing.Point(445, 383);
+            this.stockamount.Location = new System.Drawing.Point(445, 429);
             this.stockamount.Name = "stockamount";
-            this.stockamount.Size = new System.Drawing.Size(100, 22);
+            this.stockamount.Size = new System.Drawing.Size(100, 24);
             this.stockamount.TabIndex = 11;
             this.stockamount.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.stockamount_MaskInputRejected);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(160, 295);
+            this.label1.Location = new System.Drawing.Point(160, 343);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 16);
+            this.label1.Size = new System.Drawing.Size(42, 17);
             this.label1.TabIndex = 12;
             this.label1.Text = "name";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(160, 389);
+            this.label3.Location = new System.Drawing.Point(160, 436);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 16);
+            this.label3.Size = new System.Drawing.Size(93, 17);
             this.label3.TabIndex = 14;
             this.label3.Text = "stock amount";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(160, 341);
+            this.label2.Location = new System.Drawing.Point(160, 389);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 15;
             this.label2.Text = "unit price";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // categoryid
             // 
-            this.categoryid.Location = new System.Drawing.Point(445, 433);
+            this.categoryid.Location = new System.Drawing.Point(445, 474);
             this.categoryid.Name = "categoryid";
-            this.categoryid.Size = new System.Drawing.Size(100, 22);
+            this.categoryid.Size = new System.Drawing.Size(100, 24);
             this.categoryid.TabIndex = 16;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(160, 436);
+            this.label4.Location = new System.Drawing.Point(160, 484);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 16);
+            this.label4.Size = new System.Drawing.Size(77, 17);
             this.label4.TabIndex = 17;
             this.label4.Text = "category id";
             // 
@@ -191,14 +183,14 @@
             // 
             this.minstock.Location = new System.Drawing.Point(784, 114);
             this.minstock.Name = "minstock";
-            this.minstock.Size = new System.Drawing.Size(49, 22);
+            this.minstock.Size = new System.Drawing.Size(49, 24);
             this.minstock.TabIndex = 18;
             // 
             // maxstock
             // 
-            this.maxstock.Location = new System.Drawing.Point(860, 114);
+            this.maxstock.Location = new System.Drawing.Point(921, 110);
             this.maxstock.Name = "maxstock";
-            this.maxstock.Size = new System.Drawing.Size(49, 22);
+            this.maxstock.Size = new System.Drawing.Size(49, 24);
             this.maxstock.TabIndex = 20;
             this.maxstock.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox3_MaskInputRejected);
             // 
@@ -206,23 +198,23 @@
             // 
             this.minprice.Location = new System.Drawing.Point(784, 161);
             this.minprice.Name = "minprice";
-            this.minprice.Size = new System.Drawing.Size(49, 22);
+            this.minprice.Size = new System.Drawing.Size(49, 24);
             this.minprice.TabIndex = 21;
             // 
             // maxprice
             // 
-            this.maxprice.Location = new System.Drawing.Point(860, 161);
+            this.maxprice.Location = new System.Drawing.Point(921, 157);
             this.maxprice.Name = "maxprice";
-            this.maxprice.Size = new System.Drawing.Size(49, 22);
+            this.maxprice.Size = new System.Drawing.Size(49, 24);
             this.maxprice.TabIndex = 22;
             this.maxprice.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox5_MaskInputRejected);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(868, 82);
+            this.label5.Location = new System.Drawing.Point(937, 82);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 16);
+            this.label5.Size = new System.Drawing.Size(33, 17);
             this.label5.TabIndex = 50;
             this.label5.Text = "Max";
             // 
@@ -231,16 +223,16 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(793, 82);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 16);
+            this.label6.Size = new System.Drawing.Size(28, 17);
             this.label6.TabIndex = 23;
             this.label6.Text = "Min";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // filterstockamount
             // 
-            this.filterstockamount.Location = new System.Drawing.Point(767, 253);
+            this.filterstockamount.Location = new System.Drawing.Point(796, 253);
             this.filterstockamount.Name = "filterstockamount";
-            this.filterstockamount.Size = new System.Drawing.Size(142, 36);
+            this.filterstockamount.Size = new System.Drawing.Size(148, 36);
             this.filterstockamount.TabIndex = 51;
             this.filterstockamount.Text = "FilterByStockAmount";
             this.filterstockamount.UseVisualStyleBackColor = true;
@@ -248,9 +240,9 @@
             // 
             // filterunitprice
             // 
-            this.filterunitprice.Location = new System.Drawing.Point(767, 295);
+            this.filterunitprice.Location = new System.Drawing.Point(796, 322);
             this.filterunitprice.Name = "filterunitprice";
-            this.filterunitprice.Size = new System.Drawing.Size(142, 36);
+            this.filterunitprice.Size = new System.Drawing.Size(148, 36);
             this.filterunitprice.TabIndex = 52;
             this.filterunitprice.Text = "FilterByUnitPrice";
             this.filterunitprice.UseVisualStyleBackColor = true;
@@ -258,9 +250,9 @@
             // 
             // filtercategoryid
             // 
-            this.filtercategoryid.Location = new System.Drawing.Point(767, 341);
+            this.filtercategoryid.Location = new System.Drawing.Point(796, 391);
             this.filtercategoryid.Name = "filtercategoryid";
-            this.filtercategoryid.Size = new System.Drawing.Size(142, 36);
+            this.filtercategoryid.Size = new System.Drawing.Size(148, 36);
             this.filtercategoryid.TabIndex = 53;
             this.filtercategoryid.Text = "FilterByCategoryId";
             this.filtercategoryid.UseVisualStyleBackColor = true;
@@ -271,7 +263,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(684, 164);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 16);
+            this.label7.Size = new System.Drawing.Size(61, 17);
             this.label7.TabIndex = 54;
             this.label7.Text = "UnitPrice";
             // 
@@ -280,7 +272,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(681, 117);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(86, 16);
+            this.label8.Size = new System.Drawing.Size(92, 17);
             this.label8.TabIndex = 55;
             this.label8.Text = "StockAmount";
             // 
@@ -290,7 +282,7 @@
             this.label9.Location = new System.Drawing.Point(684, 213);
             this.label9.Name = "label9";
             this.label9.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label9.Size = new System.Drawing.Size(73, 16);
+            this.label9.Size = new System.Drawing.Size(77, 17);
             this.label9.TabIndex = 56;
             this.label9.Text = "CategoryId";
             // 
@@ -298,13 +290,13 @@
             // 
             this.categoryidvalue.Location = new System.Drawing.Point(784, 210);
             this.categoryidvalue.Name = "categoryidvalue";
-            this.categoryidvalue.Size = new System.Drawing.Size(134, 22);
+            this.categoryidvalue.Size = new System.Drawing.Size(134, 24);
             this.categoryidvalue.TabIndex = 57;
             this.categoryidvalue.Text = " ";
             // 
             // customerorderbtn
             // 
-            this.customerorderbtn.Location = new System.Drawing.Point(871, 474);
+            this.customerorderbtn.Location = new System.Drawing.Point(869, 474);
             this.customerorderbtn.Name = "customerorderbtn";
             this.customerorderbtn.Size = new System.Drawing.Size(128, 36);
             this.customerorderbtn.TabIndex = 58;
@@ -342,9 +334,41 @@
             this.showAll.UseVisualStyleBackColor = true;
             this.showAll.Click += new System.EventHandler(this.showAll_Click);
             // 
+            // showCustomers
+            // 
+            this.showCustomers.Location = new System.Drawing.Point(869, 551);
+            this.showCustomers.Name = "showCustomers";
+            this.showCustomers.Size = new System.Drawing.Size(128, 36);
+            this.showCustomers.TabIndex = 62;
+            this.showCustomers.Text = "Customers";
+            this.showCustomers.UseVisualStyleBackColor = true;
+            this.showCustomers.Click += new System.EventHandler(this.showCustomers_Click);
+            // 
+            // showSuppliers
+            // 
+            this.showSuppliers.Location = new System.Drawing.Point(662, 551);
+            this.showSuppliers.Name = "showSuppliers";
+            this.showSuppliers.Size = new System.Drawing.Size(128, 36);
+            this.showSuppliers.TabIndex = 63;
+            this.showSuppliers.Text = "Suppliers";
+            this.showSuppliers.UseVisualStyleBackColor = true;
+            this.showSuppliers.Click += new System.EventHandler(this.showSuppliers_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(548, 24);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(175, 17);
+            this.label10.TabIndex = 64;
+            this.label10.Text = "Seacrh With Product Name";
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1000, 566);
+            this.ClientSize = new System.Drawing.Size(1074, 620);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.showSuppliers);
+            this.Controls.Add(this.showCustomers);
             this.Controls.Add(this.showAll);
             this.Controls.Add(this.refresh);
             this.Controls.Add(this.supplierorderbtn);
@@ -371,7 +395,6 @@
             this.Controls.Add(this.unitprice);
             this.Controls.Add(this.name);
             this.Controls.Add(this.searchtext);
-            this.Controls.Add(this.searchproduct);
             this.Controls.Add(this.dgw);
             this.Controls.Add(this.updateproduct);
             this.Controls.Add(this.deleteproduct);
@@ -396,7 +419,6 @@
         private System.Windows.Forms.Button deleteproduct;
         private System.Windows.Forms.Button updateproduct;
         private System.Windows.Forms.DataGridView dgw;
-        private System.Windows.Forms.Button searchproduct;
         private System.Windows.Forms.TextBox searchtext;
         private System.Windows.Forms.MaskedTextBox name;
         private System.Windows.Forms.MaskedTextBox unitprice;
@@ -423,6 +445,9 @@
         private System.Windows.Forms.Button supplierorderbtn;
         private System.Windows.Forms.Button refresh;
         private System.Windows.Forms.Button showAll;
+        private System.Windows.Forms.Button showCustomers;
+        private System.Windows.Forms.Button showSuppliers;
+        private System.Windows.Forms.Label label10;
     }
 }
 

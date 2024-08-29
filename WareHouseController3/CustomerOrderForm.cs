@@ -19,8 +19,56 @@ namespace WareHouseController3
         public CustomerOrderForm()
         {
             InitializeComponent();
+            // SetupFormLayout();
         }
+        /*
+        private void SetupFormLayout()
+        {
+            // TableLayoutPanel oluşturun
+            TableLayoutPanel layout = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2,
+                RowCount = 8
+            };
 
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            // Row styles
+            for (int i = 0; i < 7; i++)
+            {
+                layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            }
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            // Bileşenleri ekleyin
+            layout.Controls.Add(new Label { Text = "Product Name:", Anchor = AnchorStyles.Right }, 0, 0);
+            layout.Controls.Add(salesProductName, 1, 0);
+            layout.Controls.Add(new Label { Text = "Customer Name:", Anchor = AnchorStyles.Right }, 0, 1);
+            layout.Controls.Add(customerName, 1, 1);
+            layout.Controls.Add(new Label { Text = "Quantity:", Anchor = AnchorStyles.Right }, 0, 2);
+            layout.Controls.Add(salesQuantity, 1, 2);
+            layout.Controls.Add(new Label { Text = "Total Price:", Anchor = AnchorStyles.Right }, 0, 3);
+            layout.Controls.Add(salesTotalPrice, 1, 3);
+            layout.Controls.Add(new Label { Text = "Order Date:", Anchor = AnchorStyles.Right }, 0, 4);
+            layout.Controls.Add(salesOrderDate, 1, 4);
+            layout.Controls.Add(new Label { Text = "Condition:", Anchor = AnchorStyles.Right }, 0, 5);
+            layout.Controls.Add(salesCondition, 1, 5);
+            layout.Controls.Add(new Label { Text = "Payment Condition:", Anchor = AnchorStyles.Right }, 0, 6);
+            layout.Controls.Add(salesPaymentCondition, 1, 6);
+
+            // Düğmeleri ekleyin
+            layout.Controls.Add(addCustomerOrder, 0, 7);
+            layout.Controls.Add(confirmOrderBtn, 1, 7);
+            layout.Controls.Add(confirmBackConditionBtn, 1, 7); // Tek bir satıra yerleştirildi
+            layout.Controls.Add(button3, 1, 7); // Tek bir satıra yerleştirildi
+            layout.Controls.Add(button5, 1, 7); // Tek bir satıra yerleştirildi
+
+            // TableLayoutPanel'i form'a ekleyin
+            this.Controls.Add(layout);
+        }
+        */
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -48,6 +96,8 @@ namespace WareHouseController3
         private void LoadProducts()
         {
             dgwSalesOrder.DataSource = _salesOrderDal.GetAll();
+            dgwSalesOrder.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
 
 
@@ -57,7 +107,6 @@ namespace WareHouseController3
             customerName.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
             salesQuantity.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
-            salesTotalPrice.Text = (product.UnitPrice * Convert.ToInt32(salesQuantity.Text)).ToString();
             salesOrderDate.Text = dgwSalesOrder.CurrentRow.Cells[7].Value.ToString();
             salesCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
             salesPaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
@@ -66,12 +115,11 @@ namespace WareHouseController3
 
         private void addCustomerOrder_Click(object sender, EventArgs e)
         {
-            if (!InputValidator.ValidateString(salesProductName.Text, out string salesproductname)) return;
-            if (!InputValidator.ValidateString(customerName.Text, out string customername)) return;
-            if (!InputValidator.ValidateInt(salesQuantity.Text, out int quantity)) return;
-            if (!InputValidator.ValidateDecimal(salesTotalPrice.Text, out decimal totalprice)) return;
-            if (!InputValidator.ValidateDateTime(salesOrderDate.Text, out DateTime orderdate)) return;
-            if (!InputValidator.ValidateBoolean(salesCondition.Text, out bool paidcondition)) return;
+            if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
+            if (!InputValidator.ValidateString(customerName.Text.ToLower(), out string customername)) return;
+            if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
+            if (!InputValidator.ValidateDateTime(salesOrderDate.Text.ToLower(), out DateTime orderdate)) return;
+            if (!InputValidator.ValidateBoolean(salesCondition.Text.ToLower(), out bool paidcondition)) return;
 
             var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customername);
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
@@ -106,11 +154,6 @@ namespace WareHouseController3
                 MessageBox.Show("Quantity can't be zero");
                 return;
             }
-            if (totalprice < 0)
-            {
-                MessageBox.Show("Total price can't be negative");
-                return;
-            }
             if (orderdate > DateTime.Now)
             {
                 MessageBox.Show("Order date can't be in the future");
@@ -128,12 +171,16 @@ namespace WareHouseController3
                 OrderDate = orderdate,
                 IsPaid = paidcondition
             });
+            /*
+            // Bu işlemi order confirm olduğunda yapmak daha mantıklı
             var entity = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
             entity.StockAmount -= quantity;
             _productDal.Update(entity);
+            */
             Form1 form1 = new Form1();
             form1.LoadProducts();
             LoadProducts();
+            MessageBox.Show("Order is added");
         }
 
         private void salesPaymentCondition_TextChanged(object sender, EventArgs e)
@@ -146,12 +193,18 @@ namespace WareHouseController3
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
-
+                var product = _productDal.GetAll().FirstOrDefault(p => p.Name == entity.ProductName);
+                if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
+                if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
                 if (entity != null)
                 {
                     entity.IsPaid = true;
+                    var entityproduct = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
+                    entityproduct.StockAmount -= quantity;
+                    _productDal.Update(entityproduct);
                     _salesOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadProducts(); // Verileri yeniden yükleyin
+                    MessageBox.Show("Order is paid now");
                 }
             }
             else
@@ -166,12 +219,17 @@ namespace WareHouseController3
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
-
+                if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
+                if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
                 if (entity != null)
                 {
                     entity.IsPaid = false;
+                    var entityproduct = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
+                    entityproduct.StockAmount += quantity;
+                    _productDal.Update(entityproduct);
                     _salesOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadProducts(); // Verileri yeniden yükleyin
+                    MessageBox.Show("Order is unpaid now");
                 }
             }
             else
@@ -190,12 +248,11 @@ namespace WareHouseController3
 
             if (entity != null)
             {
-                if (!InputValidator.ValidateString(salesProductName.Text, out string salesproductname)) return;
-                if (!InputValidator.ValidateString(customerName.Text, out string customername)) return;
-                if (!InputValidator.ValidateInt(salesQuantity.Text, out int quantity)) return;
-                if (!InputValidator.ValidateDecimal(salesTotalPrice.Text, out decimal totalprice)) return;
-                if (!InputValidator.ValidateDateTime(salesOrderDate.Text, out DateTime orderdate)) return;
-                if (!InputValidator.ValidateBoolean(salesCondition.Text, out bool paidcondition)) return;
+                if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
+                if (!InputValidator.ValidateString(customerName.Text.ToLower(), out string customername)) return;
+                if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
+                if (!InputValidator.ValidateDateTime(salesOrderDate.Text.ToLower(), out DateTime orderdate)) return;
+                if (!InputValidator.ValidateBoolean(salesCondition.Text.ToLower(), out bool paidcondition)) return;
               
                 entity.ProductName = salesproductname;
                 entity.CustomerName = customername;
@@ -243,6 +300,7 @@ namespace WareHouseController3
                 _salesOrderDal.Update(entity);
                
                 LoadProducts();
+                MessageBox.Show("Order is updated");
             }
         }
 
@@ -256,6 +314,7 @@ namespace WareHouseController3
                 product.StockAmount += entity.Quantity;
                 _productDal.Update(product);
                 LoadProducts();
+                MessageBox.Show("Order is deleted");
             }
         }
 
@@ -290,27 +349,11 @@ namespace WareHouseController3
         {
             _customerDal.AddNew(new Customer
             {
-                Name = addCustomerName.Text,
-                ContactInfo = customerContact.Text,
-                Address = customerAddress.Text
+                Name = addCustomerName.Text.ToLower(),
+                ContactInfo = customerContact.Text.ToLower(),
+                Address = customerAddress.Text.ToLower()
             });
         }
     }
 
-    /*
-    private void confirmOrderBtn_Click(object sender, EventArgs e)
-    {
-        if (orderConfirmText.Text.ToLower() == "understand") 
-        {
-            var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
-            entity.IsPaid = true;
-            LoadProducts(); } 
-        else 
-        { 
-            MessageBox.Show("Please enter the 'understand' word to confirm the order");
-            LoadProducts();
-
-        }
-    }*/
 }
-
