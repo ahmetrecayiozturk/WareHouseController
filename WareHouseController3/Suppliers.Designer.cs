@@ -35,7 +35,6 @@
             this.SupplierName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.updateSupplierbtn = new System.Windows.Forms.Button();
             this.addSupplierbtn = new System.Windows.Forms.Button();
             this.deleteSupplierbtn = new System.Windows.Forms.Button();
             this.searchSupplier = new System.Windows.Forms.TextBox();
@@ -47,144 +46,132 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(336, 54);
+            this.dataGridView1.Location = new System.Drawing.Point(384, 54);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(680, 490);
+            this.dataGridView1.Size = new System.Drawing.Size(777, 490);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // addSupplierName
             // 
-            this.addSupplierName.Location = new System.Drawing.Point(182, 77);
+            this.addSupplierName.Location = new System.Drawing.Point(208, 77);
             this.addSupplierName.Margin = new System.Windows.Forms.Padding(2);
             this.addSupplierName.Name = "addSupplierName";
-            this.addSupplierName.Size = new System.Drawing.Size(88, 24);
+            this.addSupplierName.Size = new System.Drawing.Size(100, 22);
             this.addSupplierName.TabIndex = 2;
             this.addSupplierName.TextChanged += new System.EventHandler(this.addSupplierName_TextChanged);
             // 
             // addAddress
             // 
-            this.addAddress.Location = new System.Drawing.Point(182, 122);
+            this.addAddress.Location = new System.Drawing.Point(208, 122);
             this.addAddress.Margin = new System.Windows.Forms.Padding(2);
             this.addAddress.Name = "addAddress";
-            this.addAddress.Size = new System.Drawing.Size(88, 24);
+            this.addAddress.Size = new System.Drawing.Size(100, 22);
             this.addAddress.TabIndex = 5;
             // 
             // addContact
             // 
-            this.addContact.Location = new System.Drawing.Point(182, 164);
+            this.addContact.Location = new System.Drawing.Point(208, 164);
             this.addContact.Margin = new System.Windows.Forms.Padding(2);
             this.addContact.Name = "addContact";
-            this.addContact.Size = new System.Drawing.Size(88, 24);
+            this.addContact.Size = new System.Drawing.Size(100, 22);
             this.addContact.TabIndex = 6;
             // 
             // SupplierName
             // 
             this.SupplierName.AutoSize = true;
-            this.SupplierName.Location = new System.Drawing.Point(11, 84);
+            this.SupplierName.Location = new System.Drawing.Point(13, 84);
             this.SupplierName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SupplierName.Name = "SupplierName";
-            this.SupplierName.Size = new System.Drawing.Size(95, 17);
+            this.SupplierName.Size = new System.Drawing.Size(106, 16);
             this.SupplierName.TabIndex = 7;
-            this.SupplierName.Text = "Supplier Name";
+            this.SupplierName.Text = "TEDARİKÇİ İSMİ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 129);
+            this.label2.Location = new System.Drawing.Point(11, 129);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 17);
+            this.label2.Size = new System.Drawing.Size(130, 16);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Supplier Address";
+            this.label2.Text = "TEDARİKÇİ ADRESİ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 171);
+            this.label3.Location = new System.Drawing.Point(11, 171);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(109, 17);
+            this.label3.Size = new System.Drawing.Size(134, 16);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Supplier Contact";
-            // 
-            // updateSupplierbtn
-            // 
-            this.updateSupplierbtn.Location = new System.Drawing.Point(13, 351);
-            this.updateSupplierbtn.Margin = new System.Windows.Forms.Padding(2);
-            this.updateSupplierbtn.Name = "updateSupplierbtn";
-            this.updateSupplierbtn.Size = new System.Drawing.Size(258, 50);
-            this.updateSupplierbtn.TabIndex = 36;
-            this.updateSupplierbtn.Text = "Update Supplier";
-            this.updateSupplierbtn.UseVisualStyleBackColor = true;
-            this.updateSupplierbtn.Click += new System.EventHandler(this.updateSupplierbtn_Click);
+            this.label3.Text = "TEDARİKÇİ İLETİŞİM";
             // 
             // addSupplierbtn
             // 
-            this.addSupplierbtn.Location = new System.Drawing.Point(13, 220);
+            this.addSupplierbtn.Location = new System.Drawing.Point(15, 293);
             this.addSupplierbtn.Margin = new System.Windows.Forms.Padding(2);
             this.addSupplierbtn.Name = "addSupplierbtn";
-            this.addSupplierbtn.Size = new System.Drawing.Size(258, 50);
+            this.addSupplierbtn.Size = new System.Drawing.Size(295, 50);
             this.addSupplierbtn.TabIndex = 37;
-            this.addSupplierbtn.Text = "Add Supplier";
+            this.addSupplierbtn.Text = "TEDARİKÇİ EKLE";
             this.addSupplierbtn.UseVisualStyleBackColor = true;
             this.addSupplierbtn.Click += new System.EventHandler(this.addSupplierbtn_Click);
             // 
             // deleteSupplierbtn
             // 
-            this.deleteSupplierbtn.Location = new System.Drawing.Point(14, 494);
+            this.deleteSupplierbtn.Location = new System.Drawing.Point(16, 494);
             this.deleteSupplierbtn.Margin = new System.Windows.Forms.Padding(2);
             this.deleteSupplierbtn.Name = "deleteSupplierbtn";
-            this.deleteSupplierbtn.Size = new System.Drawing.Size(257, 50);
+            this.deleteSupplierbtn.Size = new System.Drawing.Size(294, 50);
             this.deleteSupplierbtn.TabIndex = 38;
-            this.deleteSupplierbtn.Text = "Delete Supplier";
+            this.deleteSupplierbtn.Text = "TEDARİKÇİ SİL";
             this.deleteSupplierbtn.UseVisualStyleBackColor = true;
             this.deleteSupplierbtn.Click += new System.EventHandler(this.deleteSupplierbtn_Click);
             // 
             // searchSupplier
             // 
-            this.searchSupplier.Location = new System.Drawing.Point(778, 16);
+            this.searchSupplier.Location = new System.Drawing.Point(889, 16);
             this.searchSupplier.Margin = new System.Windows.Forms.Padding(2);
             this.searchSupplier.Name = "searchSupplier";
-            this.searchSupplier.Size = new System.Drawing.Size(237, 24);
+            this.searchSupplier.Size = new System.Drawing.Size(270, 22);
             this.searchSupplier.TabIndex = 39;
             this.searchSupplier.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(486, 22);
+            this.label1.Location = new System.Drawing.Point(555, 22);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 17);
+            this.label1.Size = new System.Drawing.Size(159, 16);
             this.label1.TabIndex = 40;
-            this.label1.Text = "Search With Supplier Name";
+            this.label1.Text = "TEDARİKÇİ İSMİ İLE ARA";
             // 
             // refreshData
             // 
-            this.refreshData.Location = new System.Drawing.Point(10, 5);
+            this.refreshData.Location = new System.Drawing.Point(11, 5);
             this.refreshData.Margin = new System.Windows.Forms.Padding(2);
             this.refreshData.Name = "refreshData";
-            this.refreshData.Size = new System.Drawing.Size(260, 50);
+            this.refreshData.Size = new System.Drawing.Size(297, 50);
             this.refreshData.TabIndex = 46;
-            this.refreshData.Text = "Refresh Suppliers";
+            this.refreshData.Text = "TEDARİKÇİLERİ YENİLE";
             this.refreshData.UseVisualStyleBackColor = true;
             this.refreshData.Click += new System.EventHandler(this.refreshData_Click);
             // 
             // Suppliers
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 590);
+            this.ClientSize = new System.Drawing.Size(1333, 590);
             this.Controls.Add(this.refreshData);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.searchSupplier);
             this.Controls.Add(this.deleteSupplierbtn);
             this.Controls.Add(this.addSupplierbtn);
-            this.Controls.Add(this.updateSupplierbtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.SupplierName);
@@ -211,7 +198,6 @@
         private System.Windows.Forms.Label SupplierName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button updateSupplierbtn;
         private System.Windows.Forms.Button addSupplierbtn;
         private System.Windows.Forms.Button deleteSupplierbtn;
         private System.Windows.Forms.TextBox searchSupplier;

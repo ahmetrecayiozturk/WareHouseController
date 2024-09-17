@@ -88,9 +88,10 @@ namespace WareHouseController3
                                   .ToList();
                 }
 
-                throw new InvalidOperationException("Search only supports Product type with Name property.");
+                throw new InvalidOperationException("ARAMAYI SADECE ÜRÜN İSMİ İLE YAPIN.");
             }
         }
+
     }
     //Biz burada aynı zamanda hazır attribute'ler kullanabiliriz. örneğin obsolete 
 }

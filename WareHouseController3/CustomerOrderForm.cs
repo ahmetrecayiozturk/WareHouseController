@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using WareHouseController3;
 
 namespace WareHouseController3
 {
@@ -16,59 +17,26 @@ namespace WareHouseController3
         SalesOrderDal _salesOrderDal = new SalesOrderDal();
         ProductDal _productDal = new ProductDal();
         CustomerDal _customerDal = new CustomerDal();
+        ProfitDal _profitDal = new ProfitDal();
         public CustomerOrderForm()
         {
             InitializeComponent();
+            dgwSalesOrder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label12.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label13.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ispaid.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            isunpaid.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            veresiyeode.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            orderid.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            müsteriismi.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            urunismi.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            paidAmount.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
             // SetupFormLayout();
         }
-        /*
-        private void SetupFormLayout()
-        {
-            // TableLayoutPanel oluşturun
-            TableLayoutPanel layout = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 2,
-                RowCount = 8
-            };
-
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-
-            // Row styles
-            for (int i = 0; i < 7; i++)
-            {
-                layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            }
-            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-
-            // Bileşenleri ekleyin
-            layout.Controls.Add(new Label { Text = "Product Name:", Anchor = AnchorStyles.Right }, 0, 0);
-            layout.Controls.Add(salesProductName, 1, 0);
-            layout.Controls.Add(new Label { Text = "Customer Name:", Anchor = AnchorStyles.Right }, 0, 1);
-            layout.Controls.Add(customerName, 1, 1);
-            layout.Controls.Add(new Label { Text = "Quantity:", Anchor = AnchorStyles.Right }, 0, 2);
-            layout.Controls.Add(salesQuantity, 1, 2);
-            layout.Controls.Add(new Label { Text = "Total Price:", Anchor = AnchorStyles.Right }, 0, 3);
-            layout.Controls.Add(salesTotalPrice, 1, 3);
-            layout.Controls.Add(new Label { Text = "Order Date:", Anchor = AnchorStyles.Right }, 0, 4);
-            layout.Controls.Add(salesOrderDate, 1, 4);
-            layout.Controls.Add(new Label { Text = "Condition:", Anchor = AnchorStyles.Right }, 0, 5);
-            layout.Controls.Add(salesCondition, 1, 5);
-            layout.Controls.Add(new Label { Text = "Payment Condition:", Anchor = AnchorStyles.Right }, 0, 6);
-            layout.Controls.Add(salesPaymentCondition, 1, 6);
-
-            // Düğmeleri ekleyin
-            layout.Controls.Add(addCustomerOrder, 0, 7);
-            layout.Controls.Add(confirmOrderBtn, 1, 7);
-            layout.Controls.Add(confirmBackConditionBtn, 1, 7); // Tek bir satıra yerleştirildi
-            layout.Controls.Add(button3, 1, 7); // Tek bir satıra yerleştirildi
-            layout.Controls.Add(button5, 1, 7); // Tek bir satıra yerleştirildi
-
-            // TableLayoutPanel'i form'a ekleyin
-            this.Controls.Add(layout);
-        }
-        */
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -97,91 +65,161 @@ namespace WareHouseController3
         {
             dgwSalesOrder.DataSource = _salesOrderDal.GetAll();
             dgwSalesOrder.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgwSalesOrder.Columns["ProductName"].HeaderText = "Ürün İsim";
+            dgwSalesOrder.Columns["CustomerName"].HeaderText = "Müşteri İsim";
+            dgwSalesOrder.Columns["CustomerAddress"].HeaderText = "Müşteri Adresi";
+            dgwSalesOrder.Columns["CustomerContact"].HeaderText = "Müşteri İletişim";
+            dgwSalesOrder.Columns["Quantity"].HeaderText = "Miktar";
+            dgwSalesOrder.Columns["TotalPrice"].HeaderText = "Toplam Fiyat";
+            dgwSalesOrder.Columns["OrderDate"].HeaderText = "Satış Tarihi";
+            dgwSalesOrder.Columns["PaidAmount"].HeaderText = "Ödenen Para";
+            dgwSalesOrder.Columns["RemainingAmount"].HeaderText = "Kalan Para";
+            dgwSalesOrder.Columns["IsPaid"].HeaderText = "Nakit Ödenme Durumu";
 
+        }
+        private void dgwSalesOrder_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // IsPaid sütununun indeksini kontrol edin. Bu, DataGridView'daki IsPaid sütununun indeksidir.
+            // İndeks numarasını uygun şekilde ayarlayın.
+            int isPaidColumnIndex = 3; // Örneğin, 3. sütun IsPaid sütunu ise.
+
+            if (e.ColumnIndex == isPaidColumnIndex)
+            {
+                // Hücredeki değeri al
+                bool isPaid = (bool)e.Value;
+
+                // IsPaid false olsa bile, hücreyi mavi tik olarak göster.
+                // dgwSalesOrder satırındaki PaidAmount ve TotalPrice sütunlarına erişiyoruz
+                decimal paidAmount = Convert.ToDecimal(dgwSalesOrder.Rows[e.RowIndex].Cells["PaidAmount"].Value);
+                decimal totalPrice = Convert.ToDecimal(dgwSalesOrder.Rows[e.RowIndex].Cells["TotalPrice"].Value);
+
+                // Eğer ödenen miktar toplam fiyatı geçtiyse
+                if (paidAmount >= totalPrice)
+                {
+                    e.Value = "✓"; // Basit bir onay işareti ekleme
+                    e.FormattingApplied = true; // Hücre formatının uygulandığını belirtin.
+                    e.CellStyle.ForeColor = Color.Blue; // Yazı rengini mavi yapın.
+                }
+            }
         }
 
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            orderid.Text = dgwSalesOrder.CurrentRow.Cells[0].Value.ToString();
             salesProductName.Text = dgwSalesOrder.CurrentRow.Cells[1].Value.ToString();
             customerName.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
             salesQuantity.Text = dgwSalesOrder.CurrentRow.Cells[5].Value.ToString();
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
-            salesOrderDate.Text = dgwSalesOrder.CurrentRow.Cells[7].Value.ToString();
-            salesCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
-            salesPaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
+            müsteriismi.Text = dgwSalesOrder.CurrentRow.Cells[2].Value.ToString();
+            urunismi.Text = dgwSalesOrder.CurrentRow.Cells[1].Value.ToString();
+            if (dgwSalesOrder.CurrentRow.Cells[8].Value.ToString() == "True")
+            {
+                paid.Checked = true;
+                unpaid.Checked = false;
+            }
+            else
+            {
+                paid.Checked = false;
+                unpaid.Checked = true;
+            }
+            if (dgwSalesOrder.CurrentRow.Cells[8].Value.ToString() == "True")
+            {
+                ispaid.Checked = true;
+                isunpaid.Checked = false;
+            }
+            else
+            {
+                ispaid.Checked = false;
+                isunpaid.Checked = true;
+            }
+            //salesPaymentCondition.Text = dgwSalesOrder.CurrentRow.Cells[8].Value.ToString();
             LoadProducts();
         }
 
         private void addCustomerOrder_Click(object sender, EventArgs e)
         {
             if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
-            if (!InputValidator.ValidateString(customerName.Text.ToLower(), out string customername)) return;
+            //if (!InputValidator.ValidateString(customerName.Text.ToLower(), out string customername)) return;
             if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
-            if (!InputValidator.ValidateDateTime(salesOrderDate.Text.ToLower(), out DateTime orderdate)) return;
-            if (!InputValidator.ValidateBoolean(salesCondition.Text.ToLower(), out bool paidcondition)) return;
 
-            var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customername);
+            var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customerName.Text);
             var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
+            //var totalprice = product.UnitPrice * quantity;
+
+
             if (product == null)
             {
-                MessageBox.Show("Product not found");
+                MessageBox.Show("ÜRÜN DEPODA BULUNAMADI");
                 return;
             }
-            var tottalprice = product.UnitPrice * quantity;
-            if(product.StockAmount < quantity)
+
+            if (product.StockAmount < quantity)
             {
-                MessageBox.Show("There is not enough stock");
+                MessageBox.Show("DEPODA YETERLİ ÜRÜN STOĞU YOK");
                 return;
             }
-            if (customer == null)
-            {
-                MessageBox.Show("Customer not found");
-                return;
-            }
-            if (product == null)
-            {
-                MessageBox.Show("Product not found");
-                return;
-            }
+
             if (quantity < 0)
             {
-                MessageBox.Show("Quantity can't be negative");
-                return;
-            }
-            if(quantity == 0)
-            {
-                MessageBox.Show("Quantity can't be zero");
-                return;
-            }
-            if (orderdate > DateTime.Now)
-            {
-                MessageBox.Show("Order date can't be in the future");
+                MessageBox.Show("MİKTAR SIFIRDAN KÜÇÜK OLAMAZ");
                 return;
             }
 
-            _salesOrderDal.AddNew(new SalesOrder
+            if (quantity == 0)
             {
-                ProductName = salesproductname,
-                CustomerName = customername,
-                CustomerAddress = customer.Address,
-                CustomerContact = customer.ContactInfo,
-                Quantity = quantity,
-                TotalPrice = tottalprice,
-                OrderDate = orderdate,
-                IsPaid = paidcondition
-            });
-            /*
-            // Bu işlemi order confirm olduğunda yapmak daha mantıklı
-            var entity = _productDal.GetAll().FirstOrDefault(p => p.Name == salesproductname);
-            entity.StockAmount -= quantity;
-            _productDal.Update(entity);
-            */
-            Form1 form1 = new Form1();
-            form1.LoadProducts();
+                MessageBox.Show("MİKTAR SIFIR OLAMAZ");
+                return;
+            }
+
+            // Müşteri yoksa ya da adı boşsa bu alanlar doldurulacak
+            if (customer == null)
+            {
+                var customereName = string.IsNullOrEmpty(customerName.Text) ? "Müşteri ismi yok" : customerName.Text;
+                var customereAddress = string.IsNullOrEmpty(customerAddress.Text) ? "Adres yok" : customerAddress.Text;
+                var customereContact = string.IsNullOrEmpty(customerContact.Text) ? "İletişim yok" : customerContact.Text;
+
+
+                _salesOrderDal.AddNew(new SalesOrder
+                {
+                    ProductName = salesproductname,
+                    CustomerName = customereName,
+                    CustomerAddress = customereAddress,
+                    CustomerContact = customereContact,
+                    Quantity = quantity,
+                    TotalPrice = product.UnitPrice * quantity,
+                    OrderDate = DateTime.Now,
+                    IsPaid = paid.Checked
+                });
+            }
+            else
+            {
+                _salesOrderDal.AddNew(new SalesOrder
+                {
+                    ProductName = salesproductname,
+                    CustomerName = customer.Name,
+                    CustomerAddress = customer.Address,
+                    CustomerContact = customer.ContactInfo,
+                    Quantity = quantity,
+                    TotalPrice = product.UnitPrice * quantity,
+                    OrderDate = DateTime.Now,
+                    IsPaid = paid.Checked
+                });
+            }
+
+            //var totalprice = product.UnitPrice * quantity;
+
+
+
+            // Stok güncellemesi
+            product.StockAmount -= quantity;
+            _productDal.Update(product);
+
+            // Ürünleri ve formu güncelle
             LoadProducts();
-            MessageBox.Show("Order is added");
+            MessageBox.Show("EMİR EKLENDİ");
         }
+
 
         private void salesPaymentCondition_TextChanged(object sender, EventArgs e)
         {
@@ -189,7 +227,12 @@ namespace WareHouseController3
         }
         private void confirmOrderBtn_Click(object sender, EventArgs e)
         {
-            if (orderConfirmText.Text.ToLower() == "understand")
+            DialogResult dialogResult = MessageBox.Show(
+     "ÜRÜNÜ ÖDENDİ OLARAK İŞARETLEMEK İSTEDİĞİNİZDEN EMİN MİSİNİZ ?",
+     "Ürün Zaten Mevcut",
+     MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
@@ -204,18 +247,21 @@ namespace WareHouseController3
                     _productDal.Update(entityproduct);
                     _salesOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadProducts(); // Verileri yeniden yükleyin
-                    MessageBox.Show("Order is paid now");
+                    MessageBox.Show("EMİR ÖDENDİ");
                 }
             }
             else
             {
-                MessageBox.Show("Please enter the 'understand' word to confirm the order");
+                MessageBox.Show("EMİR ÖDENDİ OLARAK İŞARETLENEMEDİ");
             }
         }
-
         private void confirmBackConditionBtn_Click(object sender, EventArgs e)
         {
-            if (confirmBackCondition.Text.ToLower() == "understand")
+            DialogResult dialogResult = MessageBox.Show(
+     "ÜRÜNÜ ÖDENMEDİ OLARAK İŞARETLEMEK İSTEDİĞİNİZDEN EMİN MİSİNİZ ?",
+     "Ürün Zaten Mevcut",
+     MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
                 var orderId = Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value);
                 var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == orderId);
@@ -229,80 +275,16 @@ namespace WareHouseController3
                     _productDal.Update(entityproduct);
                     _salesOrderDal.Update(entity); // Veritabanında güncelleme yapın
                     LoadProducts(); // Verileri yeniden yükleyin
-                    MessageBox.Show("Order is unpaid now");
+                    MessageBox.Show("EMİR ÖDENMESİ GERİ ALINDI");
                 }
             }
             else
             {
-                MessageBox.Show("Please enter the 'understand' word to confirm the order");
+                MessageBox.Show("EMİR ÖDENMEDİ OLARAK İŞARETLENEMEDİ");
             }
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
-            var product = _productDal.GetAll().FirstOrDefault(p => p.Name == salesProductName.Text);
-            var totallprice = product.UnitPrice * Convert.ToInt32(salesQuantity.Text);
-            var customer = _customerDal.GetAll().FirstOrDefault(p => p.Name == customerName.Text);
-
-            if (entity != null)
-            {
-                if (!InputValidator.ValidateString(salesProductName.Text.ToLower(), out string salesproductname)) return;
-                if (!InputValidator.ValidateString(customerName.Text.ToLower(), out string customername)) return;
-                if (!InputValidator.ValidateInt(salesQuantity.Text.ToLower(), out int quantity)) return;
-                if (!InputValidator.ValidateDateTime(salesOrderDate.Text.ToLower(), out DateTime orderdate)) return;
-                if (!InputValidator.ValidateBoolean(salesCondition.Text.ToLower(), out bool paidcondition)) return;
-              
-                entity.ProductName = salesproductname;
-                entity.CustomerName = customername;
-                entity.CustomerAddress = customer.Address;
-                entity.CustomerContact = customer.ContactInfo;
-                entity.Quantity = quantity;
-                entity.TotalPrice = totallprice;
-                entity.OrderDate = orderdate;
-                entity.IsPaid = paidcondition;
-                if (product == null)
-                {
-                    MessageBox.Show("Product not found");
-                    return;
-                }
-                if (product.StockAmount < quantity)
-                {
-                    MessageBox.Show("There is not enough stock");
-                    return;
-                }
-                if (customer == null)
-                {
-                    MessageBox.Show("Customer not found");
-                    return;
-                }
-                if (entity.IsPaid == true)
-                {
-                    MessageBox.Show("You can't update a paid order");
-                    return;
-                }
-                if (entity.Quantity < 0)
-                {
-                    MessageBox.Show("Quantity can't be negative");
-                    return;
-                }
-                if (entity.TotalPrice < 0)
-                {
-                    MessageBox.Show("Total price can't be negative");
-                    return;
-                }
-                if (entity.OrderDate > DateTime.Now)
-                {
-                    MessageBox.Show("Order date can't be in the future");
-                    return;
-                }
-                _salesOrderDal.Update(entity);
-               
-                LoadProducts();
-                MessageBox.Show("Order is updated");
-            }
-        }
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -314,13 +296,13 @@ namespace WareHouseController3
                 product.StockAmount += entity.Quantity;
                 _productDal.Update(product);
                 LoadProducts();
-                MessageBox.Show("Order is deleted");
+                MessageBox.Show("EMİR SİLİNDİ");
             }
         }
 
         private void searchCustomerName_TextChanged(object sender, EventArgs e)
         {
-            using(var context = new WareHouseControlContext())
+            using (var context = new WareHouseControlContext())
             {
                 var result = context.SalesOrders.Where(p => p.CustomerName.Contains(searchCustomerName.Text)).ToList();
                 dgwSalesOrder.DataSource = result;
@@ -329,18 +311,21 @@ namespace WareHouseController3
 
         private void showAllOrders_Click(object sender, EventArgs e)
         {
-            using(var context = new WareHouseControlContext())
+            using (var context = new WareHouseControlContext())
             {
                 var result = context.SalesOrders.ToList();
                 dgwSalesOrder.DataSource = result;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
 
         private void showUnpaidOrders_Click(object sender, EventArgs e)
         {
             using (var context = new WareHouseControlContext())
             {
-                var result = context.SalesOrders.Where(p => p.IsPaid == false).ToList();
+                var result = context.SalesOrders.Where(p => p.IsPaid == false && p.PaidAmount < p.TotalPrice).ToList();
                 dgwSalesOrder.DataSource = result;
             }
         }
@@ -353,6 +338,143 @@ namespace WareHouseController3
                 ContactInfo = customerContact.Text.ToLower(),
                 Address = customerAddress.Text.ToLower()
             });
+        }
+
+        private void salesOrderDate_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void paid_CheckedChanged(object sender, EventArgs e)
+        {
+            if (paid.Checked)
+            {
+                unpaid.Checked = false;
+            }
+            else
+            {
+                unpaid.Checked = true;
+            }
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unpaid_CheckedChanged(object sender, EventArgs e)
+        {
+            if (unpaid.Checked)
+            {
+                paid.Checked = false;
+            }
+            else
+            {
+                paid.Checked = true;
+            }
+        }
+
+        private void salesCondition_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+   private void veresiyeode_Click(object sender, EventArgs e)
+        {
+            if (isunpaid.Checked == true)
+            {
+                if (dgwSalesOrder.SelectedRows.Count > 0)
+                {
+                    var entity = _salesOrderDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgwSalesOrder.CurrentRow.Cells[0].Value));
+                    var product = _productDal.GetAll().FirstOrDefault(p => p.Name == urunismi.Text);
+
+                    if (entity != null)
+                    {
+                        decimal paymentAmount;
+                        if (!decimal.TryParse(paidAmount.Text, out paymentAmount))
+                        {
+                            MessageBox.Show("Geçerli bir ödeme miktarı girin.");
+                            return;
+                        }
+
+                        decimal remainingAmount = entity.TotalPrice - entity.PaidAmount;
+                        if (paymentAmount > remainingAmount)
+                        {
+                            MessageBox.Show("Ödenen miktar kalan borçtan fazla olamaz.");
+                            return;
+                        }
+
+                        // Ödenen miktarı borçtan düş
+                        entity.PaidAmount += paymentAmount;
+                        /*
+                        if (entity.PaidAmount >= entity.TotalPrice)
+                        {
+                            entity.IsPaid = true;
+                        }
+                        */
+                        if (product != null)
+                        {
+                            var purchasePrice = product.PurchasePrice;
+                            var salePrice = product.UnitPrice;
+                            var profitAmount = paymentAmount * ((salePrice - purchasePrice) / salePrice);
+                            var paidamount = Convert.ToInt32(paidAmount.Text); 
+                            var profitPercentage = (salePrice - purchasePrice) / salePrice * 100;
+                            var musteriismi = müsteriismi.Text;
+                            if(musteriismi == null)
+                            {
+                                musteriismi = "Müşteri ismi yok";
+                                return;
+                            }
+                            // Kâr nesnesi oluştur
+                            var profit = new Profit
+                            {
+                                ProductName = product.Name,
+                                UnitPrice = salePrice,
+                                PurchasePrice = purchasePrice,
+                                CustomerName = musteriismi,
+                                PaidAmount = paidamount,
+                                PaidDate = DateTime.Now, // Ödeme tarihi
+                                //OrderDate = entity.OrderDate,
+                                //IsOnCredit = !entity.IsPaid
+                            };
+
+                            // Kârı veritabanına kaydet
+                            _profitDal.Add(profit);
+
+                            // Günlük ve aylık kârları güncelle
+                            //UpdateProfit(profitAmount, order.OrderDate);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ürün bilgisi bulunamadı.");
+                        }
+                        entity.RemainingAmount = entity.TotalPrice - entity.PaidAmount;
+                        _salesOrderDal.Update(entity);
+                        //LoadUnpaidOrders();
+                        MessageBox.Show("Ödeme başarıyla tamamlandı.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Lütfen ödeme yapmak için bir veresiye seçin.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("ÖDENMİŞ EMİRİ ÖDEYEMEZSİNİZ");
+            }
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(idtext.Text, out int id))
+            {
+                using (var context = new WareHouseControlContext())
+                {
+                    var result = context.SalesOrders.Where(p => p.Id == id).ToList();
+                    dgwSalesOrder.DataSource = result;
+                }
+            }
         }
     }
 

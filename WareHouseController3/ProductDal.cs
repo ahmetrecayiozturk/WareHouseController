@@ -42,6 +42,7 @@ namespace WareHouseController3
                 //return context.Products.Where(p => p.UnitPrice >= min && p.UnitPrice <= max).ToList();
             }
         }
+        /*
         public List<Product> GetByCategoryId(int id)
         {
             using(var context = new WareHouseControlContext())
@@ -49,6 +50,7 @@ namespace WareHouseController3
                 return context.Products.Where(p => p.ProductCategoryId == id).ToList();
             }
         }
+        */
     }
 }
 

@@ -10,6 +10,8 @@ public class SalesOrder
     public string CustomerAddress { get; set; }
     public int Quantity { get; set; }
     public decimal TotalPrice { get; set; }
+    public decimal PaidAmount { get; set; }
+    public decimal RemainingAmount { get; set; }
     public DateTime OrderDate { get; set; }
     public bool IsPaid { get; set; }
     /*

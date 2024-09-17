@@ -16,12 +16,15 @@ namespace WareHouseController3
         public string Name { get; set; }
 
         public decimal UnitPrice { get; set; }
+        public decimal PurchasePrice { get; set; }
 
         [RequiredProperty] // StockAmount property'si zorunlu olarak işaretlendi
         public int StockAmount { get; set; }
 
+        /*
         [RequiredProperty] // ProductCategoryId property'si zorunlu olarak işaretlendi
         public int ProductCategoryId { get; set; }
+        */
     }
 
     // Oluşturacağımız attribute'ün hangi özelliklerde kullanılacağını belirtmek için AttributeUsage kullanılır.

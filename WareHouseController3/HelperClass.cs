@@ -16,7 +16,7 @@ namespace WareHouseController3
             }
             else
             {
-                MessageBox.Show("Please enter the empty values");
+                MessageBox.Show("Lütfen Boş Alanları Doldurun");
                 return false;
                 }
         }
@@ -29,7 +29,7 @@ namespace WareHouseController3
             }
             else
             {
-                MessageBox.Show("Please enter the empty values");
+                MessageBox.Show("Lütfen Boş Alanları Doldurun");
                 return false;
             }
         }
@@ -41,7 +41,7 @@ namespace WareHouseController3
             }
             else
             {
-                MessageBox.Show("Please enter the empty values");
+                MessageBox.Show("Lütfen Boş Alanları Doldurun");
                 return false;
             }
         }
@@ -54,7 +54,7 @@ namespace WareHouseController3
             }
             else
             {
-                MessageBox.Show("Please enter the empty values");
+                MessageBox.Show("Lütfen Boş Alanları Doldurun");
                 output = null;
                 return false;
             }
@@ -67,7 +67,7 @@ namespace WareHouseController3
             }
             else
             {
-                MessageBox.Show("Please enter the empty values");
+                MessageBox.Show("Lütfen Boş Alanları Doldurun");
                 return false;
             }
         }

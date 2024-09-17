@@ -16,6 +16,8 @@ namespace WareHouseController3
         public Suppliers()
         {
             InitializeComponent();
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -30,6 +32,10 @@ namespace WareHouseController3
             var result = _supplierDal.GetAll();
             dataGridView1.DataSource = result;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.Columns["Name"].HeaderText = "Tedarikçi İsimi";
+            dataGridView1.Columns["Address"].HeaderText = "Tedarikçi Adres";
+            dataGridView1.Columns["ContactInfo"].HeaderText = "Tedarikçi İletişim";
+
 
         }
         private void Suppliers_Load(object sender, EventArgs e)
@@ -44,16 +50,41 @@ namespace WareHouseController3
 
         private void addSupplierbtn_Click(object sender, EventArgs e)
         {
-            if (!InputValidator.ValidateString(addSupplierName.Text.ToLower(), out string suppliername)) ;
-            if (!InputValidator.ValidateString(addAddress.Text.ToLower(), out string supplieraddress)) ;
-            if (!InputValidator.ValidateString(addContact.Text.ToLower(), out string supplierphone)) ;
-            _supplierDal.AddNew(new Supplier
+            //if (!InputValidator.ValidateString(addSupplierName.Text.ToLower(), out string suppliername)) ;
+            //if (!InputValidator.ValidateString(addAddress.Text.ToLower(), out string supplieraddress)) ;
+            //if (!InputValidator.ValidateString(addContact.Text.ToLower(), out string supplierphone)) ;
+            var supplier = _supplierDal.GetAll().FirstOrDefault(p => p.Name == addSupplierName.Text.ToLower());
+            /*if(addAddress.Text == null || addContact.Text == null || addSupplierName.Text == null)
             {
-                Name = suppliername,
-                Address = supplieraddress,
-                ContactInfo = supplierphone
-            });
-            LoadSuppliers();
+                MessageBox.Show("Lütfen bir adres ve telefon numarası ve bir isim girin.");
+                return;
+            }*/
+            if(supplier != null)
+            {
+                MessageBox.Show("Bu isimde bir tedarikçi zaten var.");
+                return;
+            }
+            if(supplier == null && addSupplierName.Text.ToLower() != null)
+            {
+                _supplierDal.AddNew(new Supplier
+                {
+                    Name = addSupplierName.Text.ToLower(),
+                    Address = addAddress.Text.ToLower(),
+                    ContactInfo = addContact.Text.ToLower()
+                });
+                LoadSuppliers();
+            }
+            else
+            {
+                MessageBox.Show("Lütfen bir isim girin.");
+            }
+            //_supplierDal.AddNew(new Supplier
+            //{
+            //    Name = addSupplierName.Text,
+            //    Address = supplieraddress,
+            //    ContactInfo = supplierphone
+            //});
+            //LoadSuppliers();
         }
 
         private void updateSupplierbtn_Click(object sender, EventArgs e)
@@ -69,7 +100,15 @@ namespace WareHouseController3
         private void deleteSupplierbtn_Click(object sender, EventArgs e)
         {
             var entity = _supplierDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value));
-            _supplierDal.Delete(entity);
+            if(entity == null) {                 
+                MessageBox.Show("Lütfen bir tedarikçi seçin.");
+                return;
+            }
+            if(entity != null)
+            {
+               _supplierDal.Delete(entity);
+
+            }
             LoadSuppliers();
         }
 

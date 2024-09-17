@@ -13,7 +13,16 @@ namespace WareHouseController3
         public string SupplierName { get; set; }
         public string Address { get; set; }
         public string ContactInfo { get; set; }
+        public int Quantity { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal PaidAmount { get; set; }
+        public decimal RemainingAmount { get; set; }
+        public DateTime OrderDate { get; set; }
+        public bool IsDelivered { get; set; }
+        public bool IsPaid { get; set; }
         /*
+        public Product Product { get; set; }
+        public Supplier Supplier { get; set; }
         partial void OnSupplierAddressChanging(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -21,14 +30,6 @@ namespace WareHouseController3
                 throw new ArgumentNullException("Supplier address cannot be empty.");
             }
         }
-        */
-        public int Quantity { get; set; }
-        public decimal TotalPrice { get; set; }
-        public DateTime OrderDate { get; set; }
-        public bool IsPaid { get; set; }
-        /*
-        public Product Product { get; set; }
-        public Supplier Supplier { get; set; }
         */
     }
 

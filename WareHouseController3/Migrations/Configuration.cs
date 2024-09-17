@@ -10,7 +10,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "WareHouseController3.WareHouseControlContext";
         }
 
         protected override void Seed(WareHouseController3.WareHouseControlContext context)

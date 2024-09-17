@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace WareHouseController3
 {
@@ -11,17 +12,66 @@ namespace WareHouseController3
         public Form1()
         {
             InitializeComponent();
+            dgw.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            addproduct.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            updateproduct.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            deleteproduct.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            searchtext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            filterunitprice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            minprice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            maxprice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            filterstockamount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            minstock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            maxstock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            supplierorderbtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            customerorderbtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            refresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            showAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            showSuppliers.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            showCustomers.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            showAllProfitDaily.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            showProfitMonthly.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            // Label ve TextBox bileşenlerinin Anchor özelliklerini ayarlayın
+            name.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            unitprice.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            purchasePrice.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            stockamount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            searchtext.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            minprice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            maxprice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            minstock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            maxstock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
         }
         //Form1'in verilerini başka sayfalar aracılığı ile yükleyebilmek için LoadProducts metodunu public yaptık
         public void LoadProducts()
         {
+            // DataGridView'e veriyi bağladıktan sonra başlıkları değiştir
             dgw.DataSource = _productDal.GetAll();
+            dgw.Columns["Name"].HeaderText = "İsim";
+            dgw.Columns["UnitPrice"].HeaderText = "Ürün Fiyatı";
+            dgw.Columns["PurchasePrice"].HeaderText = "Alış Fiyatı";
+            dgw.Columns["StockAmount"].HeaderText = "Stok Miktarı";
+
+            // Sütun boyutlarını otomatik olarak dolduracak şekilde ayarla
             dgw.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         public void RefreshProducts()
         {
             dgw.Refresh();
         }
+        /*
+        //Kategori id'sini kaldırdığım için burayı da kaldırıyorum
         private void addproduct_Click(object sender, EventArgs e)
         {
             bool isExist = _productDal.GetAll().Any(p => p.Name == name.Text);
@@ -39,10 +89,44 @@ namespace WareHouseController3
                     ProductCategoryId = categoryId
                 });
                 LoadProducts();
+                MessageBox.Show("ÜRÜN EKLENDİ");
             }
             else
             {
-                MessageBox.Show("Product already exists");
+                MessageBox.Show("ÜRÜN HALIHAZIRDA DEPODA MEVCUT");
+            }
+        }
+        */
+        private void addproduct_Click(object sender, EventArgs e)
+        {
+            bool isExist = _productDal.GetAll().Any(p => p.Name == name.Text);
+
+            if (!isExist)
+            {
+                if (!InputValidator.ValidateDecimal(unitprice.Text.ToLower(), out decimal unitPrice)) return;
+                if (!InputValidator.ValidateDecimal(purchasePrice.Text.ToLower(), out decimal purchaseprice)) return;
+                if (!InputValidator.ValidateInt(stockamount.Text.ToLower(), out int stockAmount)) return;
+                //Kategori id'sini kaldırdığım için burayı da kaldırıyorum
+                //if (!InputValidator.ValidateInt(categoryid.Text.ToLower(), out int categoryId)) return;
+
+                _productDal.Add(new Product
+                {
+                    Name = name.Text,
+                    UnitPrice = unitPrice,
+                    StockAmount = stockAmount,
+                    PurchasePrice = purchaseprice
+                    //Kategori id'sini kaldırdığım için burayı da kaldırıyorum
+                    //ProductCategoryId = categoryId
+                });
+                LoadProducts();
+                MessageBox.Show("ÜRÜN EKLENDİ");
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Ürün Zaten Mevcut"
+
+                );
             }
         }
 
@@ -53,13 +137,17 @@ namespace WareHouseController3
             {
                 entity.Name = name.Text;
                 if (!InputValidator.ValidateDecimal(unitprice.Text.ToLower(), out decimal unitPrice)) return;
-                if(!InputValidator.ValidateInt(stockamount.Text.ToLower(), out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text.ToLower(), out int categoryId)) return;
+                if (!InputValidator.ValidateDecimal(purchasePrice.Text.ToLower(), out decimal purchaseprice)) return;
+                if (!InputValidator.ValidateInt(stockamount.Text.ToLower(), out int stockAmount)) return;
+                //if (!InputValidator.ValidateInt(categoryid.Text.ToLower(), out int categoryId)) return;
                 entity.UnitPrice = unitPrice;
                 entity.StockAmount = stockAmount;
-                entity.ProductCategoryId = categoryId;
+                entity.PurchasePrice = purchaseprice;
+                //Kategori id'si güncellenmeyecek çünkü kategori id'sini kaldırdım
+                //entity.ProductCategoryId = categoryId;
                 _productDal.Update(entity);
                 LoadProducts(); // Verileri yeniden yükle
+                MessageBox.Show("ÜRÜN GÜNCELLENDİ");
             }
         }
 
@@ -69,6 +157,7 @@ namespace WareHouseController3
             var productToDelete = new Product { Id = id };
             _productDal.Delete(productToDelete);
             LoadProducts(); // Verileri yeniden yükle
+            MessageBox.Show("ÜRÜN SİLİNDİ");
         }
 
         private void searchproduct_Click(object sender, EventArgs e)
@@ -81,8 +170,10 @@ namespace WareHouseController3
         {
             name.Text = dgw.CurrentRow.Cells[1].Value.ToString();
             unitprice.Text = dgw.CurrentRow.Cells[2].Value.ToString();
-            stockamount.Text = dgw.CurrentRow.Cells[3].Value.ToString();
-            categoryid.Text = dgw.CurrentRow.Cells[4].Value.ToString();
+            purchasePrice.Text = dgw.CurrentRow.Cells[3].Value.ToString();
+            stockamount.Text = dgw.CurrentRow.Cells[4].Value.ToString();
+            //Kategori id'sini kaldırdığım için burayı da kaldırıyorum
+            //categoryid.Text = dgw.CurrentRow.Cells[4].Value.ToString();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -134,6 +225,8 @@ namespace WareHouseController3
             dgw.DataSource= result;
      
         }*/
+
+        /*KATEGORİ ID'Yİ KALDIRDIM VE BU YÜZDEN BU KODU KALDIRDIM
         private void filtercategoryid_Click(object sender, EventArgs e)
         {
             
@@ -143,6 +236,8 @@ namespace WareHouseController3
             
             
         }
+        */
+
         /*
          * Analyze the 'System.FormatException' error bu hatayı veriyor burası
          *         private void filterunitprice_Click(object sender, EventArgs e)
@@ -252,405 +347,32 @@ namespace WareHouseController3
             Form Customers = new Customers();
             Customers.Show();
         }
-    }
-}
 
-/*
-using System;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace WareHouseController3
-{
-    public partial class Form1 : Form
-    {
-        ProductDal _productDal = new ProductDal();
-        SupplierDal _supplierDal = new SupplierDal();
-        CustomerDal _customerDal = new CustomerDal();
-        PurchaseOrderDal _purchaseOrderDal = new PurchaseOrderDal();
-        SalesOrderDal _salesOrderDal = new SalesOrderDal();
-
-        public Form1()
+        private void showAllProfitDaily_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
+            Form ShowDailyProfit = new ShowDailyProfit();
+            ShowDailyProfit.Show();
         }
 
-        private void LoadProducts()
+        private void showProfitMonthly_Click(object sender, EventArgs e)
         {
-            dgw.DataSource = _productDal.GetAll();
+            Form MonthlyProfit = new MonthlyProfit();
+            MonthlyProfit.Show();
         }
 
-        private void addproduct_Click(object sender, EventArgs e)
+        private void label5_Click(object sender, EventArgs e)
         {
-            bool isExist = _productDal.GetAll().Any(p => p.Name == name.Text);
-            if (!isExist)
-            {
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if (!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
 
-                _productDal.Add(new Product
-                {
-                    Name = name.Text,
-                    UnitPrice = unitPrice,
-                    StockAmount = stockAmount,
-                    ProductCategoryId = categoryId
-                });
-                LoadProducts();
-            }
-            else
-            {
-                MessageBox.Show("Product already exists");
-            }
         }
 
-        private void updateproduct_Click(object sender, EventArgs e)
+        private void label8_Click(object sender, EventArgs e)
         {
-            var entity = _productDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgw.CurrentRow.Cells[0].Value));
-            if (entity != null)
-            {
-                entity.Name = name.Text;
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if (!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
 
-                entity.UnitPrice = unitPrice;
-                entity.StockAmount = stockAmount;
-                entity.ProductCategoryId = categoryId;
-                _productDal.Update(entity);
-                LoadProducts(); // Verileri yeniden yükle
-            }
         }
 
-        private void deleteproduct_Click(object sender, EventArgs e)
+        private void label7_Click(object sender, EventArgs e)
         {
-            var id = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-            var productToDelete = new Product { Id = id };
-            _productDal.Delete(productToDelete);
-            LoadProducts(); // Verileri yeniden yükle
-        }
 
-        private void searchproduct_Click(object sender, EventArgs e)
-        {
-            var result = _productDal.Search(searchtext.Text);
-            dgw.DataSource = result;
-        }
-
-        private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            name.Text = dgw.CurrentRow.Cells[1].Value.ToString();
-            unitprice.Text = dgw.CurrentRow.Cells[2].Value.ToString();
-            stockamount.Text = dgw.CurrentRow.Cells[3].Value.ToString();
-            categoryid.Text = dgw.CurrentRow.Cells[4].Value.ToString();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            LoadProducts(); // Form yüklendiğinde ürünleri yükle
-        }
-
-        private void searchtext_TextChanged(object sender, EventArgs e)
-        {
-            var result = _productDal.Search(searchtext.Text);
-            dgw.DataSource = result;
-        }
-
-        private void filtercategoryid_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateInt(categoryidvalue.Text, out int categoryId)) return;
-            var result = _productDal.GetByCategoryId(id: categoryId);
-            dgw.DataSource = result;
-        }
-
-        private void filterunitprice_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateDecimal(minprice.Text, out decimal minPrice)) return;
-            if (!InputValidator.ValidateDecimal(maxprice.Text, out decimal maxPrice)) return;
-
-            var result = _productDal.GetByUnitPrice(min: minPrice, max: maxPrice);
-            dgw.DataSource = result;
-        }
-
-        private void filterstockamount_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateInt(minstock.Text, out int minStock)) return;
-            if (!InputValidator.ValidateInt(maxstock.Text, out int maxStock)) return;
-
-            var result = _productDal.GetByStockAmount(min: minStock, max: maxStock);
-            dgw.DataSource = result;
-        }
-
-        private void orderforsupplier_Click(object sender, EventArgs e)
-        {
-            if (dgw.SelectedRows.Count > 0)
-            {
-                var productId = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-                var supplierId = Convert.ToInt32(supplierid.Text); // Tedarikçi ID'si
-
-                bool isSuccess = OrderHelper.TryCreatePurchaseOrder(_productDal, _purchaseOrderDal, productId, supplierId, 10); // Örnek: 10 adet sipariş
-                if (isSuccess)
-                {
-                    MessageBox.Show("Purchase order created.");
-                }
-                else
-                {
-                    MessageBox.Show("Failed to create purchase order.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a product.");
-            }
-        }
-
-        private void orderforcustomer_Click(object sender, EventArgs e)
-        {
-            if (dgw.SelectedRows.Count > 0)
-            {
-                var productId = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-                var customerId = Convert.ToInt32(customerid.Text); // Müşteri ID'si
-                var quantity = Convert.ToInt32(quantity.Text); // Satılan miktar
-
-                bool isSuccess = OrderHelper.TryCreateSalesOrder(_productDal, _salesOrderDal, productId, customerId, quantity, out var updatedProduct);
-                if (isSuccess)
-                {
-                    MessageBox.Show("Sales order created and stock updated.");
-                }
-                else
-                {
-                    MessageBox.Show("Insufficient stock or product not found.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a product.");
-            }
-        }
-
-        private void showorders_Click(object sender, EventArgs e)
-        {
-            var purchaseOrders = _purchaseOrderDal.GetAll();
-            var salesOrders = _salesOrderDal.GetAll();
-
-            var ordersForm = new OrdersForm(purchaseOrders, salesOrders);
-            ordersForm.Show();
         }
     }
 }
- 
-*/
-
-
-
-/*
-using System;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace WareHouseController3
-{
-    public partial class Form1 : Form
-    {
-        ProductDal _productDal = new ProductDal();
-        SupplierDal _supplierDal = new SupplierDal();
-        CustomerDal _customerDal = new CustomerDal();
-        PurchaseOrderDal _purchaseOrderDal = new PurchaseOrderDal();
-        SalesOrderDal _salesOrderDal = new SalesOrderDal();
-
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void LoadProducts()
-        {
-            dgw.DataSource = _productDal.GetAll();
-        }
-
-        private void addproduct_Click(object sender, EventArgs e)
-        {
-            bool isExist = _productDal.GetAll().Any(p => p.Name == name.Text);
-            if (!isExist)
-            {
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if (!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
-
-                _productDal.Add(new Product
-                {
-                    Name = name.Text,
-                    UnitPrice = unitPrice,
-                    StockAmount = stockAmount,
-                    ProductCategoryId = categoryId
-                });
-                LoadProducts();
-            }
-            else
-            {
-                MessageBox.Show("Product already exists");
-            }
-        }
-
-        private void updateproduct_Click(object sender, EventArgs e)
-        {
-            var entity = _productDal.GetAll().FirstOrDefault(p => p.Id == Convert.ToInt32(dgw.CurrentRow.Cells[0].Value));
-            if (entity != null)
-            {
-                entity.Name = name.Text;
-                if (!InputValidator.ValidateDecimal(unitprice.Text, out decimal unitPrice)) return;
-                if (!InputValidator.ValidateInt(stockamount.Text, out int stockAmount)) return;
-                if (!InputValidator.ValidateInt(categoryid.Text, out int categoryId)) return;
-
-                entity.UnitPrice = unitPrice;
-                entity.StockAmount = stockAmount;
-                entity.ProductCategoryId = categoryId;
-                _productDal.Update(entity);
-                LoadProducts(); // Verileri yeniden yükle
-            }
-        }
-
-        private void deleteproduct_Click(object sender, EventArgs e)
-        {
-            var id = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-            var productToDelete = new Product { Id = id };
-            _productDal.Delete(productToDelete);
-            LoadProducts(); // Verileri yeniden yükle
-        }
-
-        private void searchproduct_Click(object sender, EventArgs e)
-        {
-            var result = _productDal.Search(searchtext.Text);
-            dgw.DataSource = result;
-        }
-
-        private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            name.Text = dgw.CurrentRow.Cells[1].Value.ToString();
-            unitprice.Text = dgw.CurrentRow.Cells[2].Value.ToString();
-            stockamount.Text = dgw.CurrentRow.Cells[3].Value.ToString();
-            categoryid.Text = dgw.CurrentRow.Cells[4].Value.ToString();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            LoadProducts(); // Form yüklendiğinde ürünleri yükle
-        }
-
-        private void searchtext_TextChanged(object sender, EventArgs e)
-        {
-            var result = _productDal.Search(searchtext.Text);
-            dgw.DataSource = result;
-        }
-
-        private void filtercategoryid_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateInt(categoryidvalue.Text, out int categoryId)) return;
-            var result = _productDal.GetByCategoryId(id: categoryId);
-            dgw.DataSource = result;
-        }
-
-        private void filterunitprice_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateDecimal(minprice.Text, out decimal minPrice)) return;
-            if (!InputValidator.ValidateDecimal(maxprice.Text, out decimal maxPrice)) return;
-
-            var result = _productDal.GetByUnitPrice(min: minPrice, max: maxPrice);
-            dgw.DataSource = result;
-        }
-
-        private void filterstockamount_Click(object sender, EventArgs e)
-        {
-            if (!InputValidator.ValidateInt(minstock.Text, out int minStock)) return;
-            if (!InputValidator.ValidateInt(maxstock.Text, out int maxStock)) return;
-
-            var result = _productDal.GetByStockAmount(min: minStock, max: maxStock);
-            dgw.DataSource = result;
-        }
-
-        private void orderforsupplier_Click(object sender, EventArgs e)
-        {
-            if (dgw.SelectedRows.Count > 0)
-            {
-                var productId = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-                var supplierId = Convert.ToInt32(supplierid.Text); // Tedarikçi ID'si
-
-                // Örnek: 10 adet sipariş oluştur
-                int quantity = 10;
-                var product = _productDal.GetAll().FirstOrDefault(p => p.Id == productId);
-                if (product != null)
-                {
-                    var totalPrice = product.UnitPrice * quantity;
-                    var purchaseOrder = new PurchaseOrder
-                    {
-                        ProductId = productId,
-                        SupplierId = supplierId,
-                        Quantity = quantity,
-                        TotalPrice = totalPrice,
-                        OrderDate = DateTime.Now,
-                        IsPaid = false
-                    };
-                    _purchaseOrderDal.Add(purchaseOrder);
-                    MessageBox.Show("Purchase order created.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a product.");
-            }
-        }
-
-        private void orderforcustomer_Click(object sender, EventArgs e)
-        {
-            if (dgw.SelectedRows.Count > 0)
-            {
-                var productId = Convert.ToInt32(dgw.CurrentRow.Cells[0].Value);
-                var customerId = Convert.ToInt32(customerid.Text); // Müşteri ID'si
-                var quantity = Convert.ToInt32(quantity.Text); // Satılan miktar
-                var isPaid = false; // Ödeme yapılmadı
-
-                var product = _productDal.GetAll().FirstOrDefault(p => p.Id == productId);
-                if (product != null && product.StockAmount >= quantity)
-                {
-                    var totalPrice = product.UnitPrice * quantity;
-                    var salesOrder = new SalesOrder
-                    {
-                        ProductId = productId,
-                        CustomerId = customerId,
-                        Quantity = quantity,
-                        TotalPrice = totalPrice,
-                        OrderDate = DateTime.Now,
-                        IsPaid = isPaid
-                    };
-                    _salesOrderDal.Add(salesOrder);
-
-                    // Stok güncellemesi
-                    product.StockAmount -= quantity;
-                    _productDal.Update(product);
-
-                    MessageBox.Show("Sales order created and stock updated.");
-                }
-                else
-                {
-                    MessageBox.Show("Insufficient stock or product not found.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a product.");
-            }
-        }
-
-        private void showorders_Click(object sender, EventArgs e)
-        {
-            var purchaseOrders = _purchaseOrderDal.GetAll();
-            var salesOrders = _salesOrderDal.GetAll();
-
-            // Tedarikçi siparişlerini ve müşteri siparişlerini göstermek için DataGridView'ler oluşturulabilir
-            // Örnek:
-            var purchaseOrdersForm = new OrdersForm(purchaseOrders, salesOrders);
-            purchaseOrdersForm.Show();
-        }
-    }
-}
-
-*/

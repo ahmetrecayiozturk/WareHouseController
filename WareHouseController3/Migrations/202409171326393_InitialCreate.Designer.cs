@@ -7,13 +7,13 @@ namespace WareHouseController3.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class UpdateProductModel : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateProductModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202408110238203_UpdateProductModel"; }
+            get { return "202409171326393_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

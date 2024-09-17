@@ -1,2 +1,0 @@
-# WareHouseController
-MyWareHouseControllerApp

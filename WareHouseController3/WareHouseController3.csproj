@@ -78,39 +78,17 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperClass.cs" />
-    <Compile Include="Migrations\202408050028371_InitialCreate.cs" />
-    <Compile Include="Migrations\202408050028371_InitialCreate.Designer.cs">
-      <DependentUpon>202408050028371_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408050124343_InitialCreate1.cs" />
-    <Compile Include="Migrations\202408050124343_InitialCreate1.Designer.cs">
-      <DependentUpon>202408050124343_InitialCreate1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408110238203_UpdateProductModel.cs" />
-    <Compile Include="Migrations\202408110238203_UpdateProductModel.Designer.cs">
-      <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408161610541_InitialCreate2.cs" />
-    <Compile Include="Migrations\202408161610541_InitialCreate2.Designer.cs">
-      <DependentUpon>202408161610541_InitialCreate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408161700345_InitialCreate3.cs" />
-    <Compile Include="Migrations\202408161700345_InitialCreate3.Designer.cs">
-      <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408240123103_InitialCreate4.cs" />
-    <Compile Include="Migrations\202408240123103_InitialCreate4.Designer.cs">
-      <DependentUpon>202408240123103_InitialCreate4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408240145551_InitialCreate5.cs" />
-    <Compile Include="Migrations\202408240145551_InitialCreate5.Designer.cs">
-      <DependentUpon>202408240145551_InitialCreate5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202408251021446_InitialCreate6.cs" />
-    <Compile Include="Migrations\202408251021446_InitialCreate6.Designer.cs">
-      <DependentUpon>202408251021446_InitialCreate6.cs</DependentUpon>
+    <Compile Include="Migrations\202409171326393_InitialCreate.cs" />
+    <Compile Include="Migrations\202409171326393_InitialCreate.Designer.cs">
+      <DependentUpon>202409171326393_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MonthlyProfit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MonthlyProfit.Designer.cs">
+      <DependentUpon>MonthlyProfit.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +98,8 @@
     <Compile Include="OrderHelper.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductDal.cs" />
+    <Compile Include="Profit.cs" />
+    <Compile Include="ProfitDal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrder.cs" />
@@ -127,6 +107,12 @@
     <Compile Include="Reflections.cs" />
     <Compile Include="SalesOrder.cs" />
     <Compile Include="SalesOrderDal.cs" />
+    <Compile Include="ShowDailyProfit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowDailyProfit.Designer.cs">
+      <DependentUpon>ShowDailyProfit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Supplier.cs" />
     <Compile Include="SupplierDal.cs" />
     <Compile Include="Suppliers.cs">
@@ -134,6 +120,18 @@
     </Compile>
     <Compile Include="Suppliers.Designer.cs">
       <DependentUpon>Suppliers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VeresiyeAylıkKar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VeresiyeAylıkKar.Designer.cs">
+      <DependentUpon>VeresiyeAylıkKar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VeresiyeKar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VeresiyeKar.Designer.cs">
+      <DependentUpon>VeresiyeKar.cs</DependentUpon>
     </Compile>
     <Compile Include="WareHouseControlContext.cs" />
     <EmbeddedResource Include="CustomerOrderForm.resx">
@@ -145,29 +143,11 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408050028371_InitialCreate.resx">
-      <DependentUpon>202408050028371_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202409171326393_InitialCreate.resx">
+      <DependentUpon>202409171326393_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408050124343_InitialCreate1.resx">
-      <DependentUpon>202408050124343_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408110238203_UpdateProductModel.resx">
-      <DependentUpon>202408110238203_UpdateProductModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408161610541_InitialCreate2.resx">
-      <DependentUpon>202408161610541_InitialCreate2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408161700345_InitialCreate3.resx">
-      <DependentUpon>202408161700345_InitialCreate3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408240123103_InitialCreate4.resx">
-      <DependentUpon>202408240123103_InitialCreate4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408240145551_InitialCreate5.resx">
-      <DependentUpon>202408240145551_InitialCreate5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202408251021446_InitialCreate6.resx">
-      <DependentUpon>202408251021446_InitialCreate6.cs</DependentUpon>
+    <EmbeddedResource Include="MonthlyProfit.resx">
+      <DependentUpon>MonthlyProfit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>
@@ -181,8 +161,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ShowDailyProfit.resx">
+      <DependentUpon>ShowDailyProfit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Suppliers.resx">
       <DependentUpon>Suppliers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VeresiyeAylıkKar.resx">
+      <DependentUpon>VeresiyeAylıkKar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VeresiyeKar.resx">
+      <DependentUpon>VeresiyeKar.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -198,6 +187,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
