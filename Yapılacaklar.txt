@@ -1,0 +1,49 @@
+1-Aylık-Günlük Net ve Brüt Karı Göstermek, alış ve satış fiyatı üzerinden=yapıldı
+2-Ödendi mi sorusuna evet hayır tikleri eklenecek, burada evet olurs depodan düşürülcek
+3-müşteri olmadan direkt emir ekleme, isim yok yazacam
+4-güncellemeleri kaldır, profitleri güzelce yeni bir formda veresiye profit olarak göster
+EKSİKLİKLERİ:
+Tıklandığında eski haline dönüyor dönmemeli
+Karlar sıkıntılı
+-----------------------
+
+Her şey Türkçe Olmalı
+Yenileme Butonlarını Ekle
+Belki Tedarikçilere ait emirleri göster ödeme şeysi oluştur
+Aylık Kar İçin Net ve Toplam Kar Göstermek Lazım
+Id'yi Gösteren Bir Yer Eklemeliyim
+Id'ye Göre Arama Yapmalıyım
+-----------------------
+Müşteri Formu İnceleme:
+Ürün Ekleme=+
+Ürün Güncelleme=+
+Ürün Silme=+
+Stok Miktarına Göre Filtreleme=+
+Ürün Fiyatına Göre Filtreleme=+
+Ürün İsmine Göre Arama=+
+Tam Not Aldı
+----------------------------
+Müşteri Emri Formu
+müşteri ismi olmadan ekleme=-
+müşteri emri silinirse kardan düşürülecek mi? = sildi, 
+eksik ne, günlük karda ödenmemişler de ekleniyor ancak kar olarak düşmüyor sadece miktarda totalprice olarak düşüyor, bence bu iyi kalsın
+sonradan ödendi olarak işaretlenen ürünlerin karı kayboluyor, dolayısıyla ödendi mi ödenmedi mi işaretini kaldıracağım
+Müşteri emrinde veresiye ödedikten sonra onu ödenmiş olarak gösterip kalan borcu da gösteriyor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
