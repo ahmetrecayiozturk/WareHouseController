@@ -29,7 +29,7 @@ namespace WareHouseController3
         {
             // Seçilen ay ve yıl için satışları al
             var salesOrders = _salesOrderDal.GetAll()
-                .Where(o => o.OrderDate.Year == date.Year && o.OrderDate.Month == date.Month)
+                .Where(o => o.OrderDate.Year == date.Year && o.OrderDate.Month == date.Month && o.IsPaid == true)
                 .ToList();
 
             var products = _productDal.GetAll().ToList();
